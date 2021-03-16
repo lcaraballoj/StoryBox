@@ -22,7 +22,7 @@ global story_keyword_csv
 story_keyword_json = "stories_keywords.json"
 story_keyword_csv = "stories_keywords.csv"
 
-json_file = "test-project-295420-6841cf6817ce.json"
+json_file = "GCPKey.json"
 
 #Set mic index
 mic = 0
