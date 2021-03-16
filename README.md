@@ -28,8 +28,7 @@ This project is a voice box that is triggered by a button and relies on voice co
 To setup the Raspberry Pi look at the Fritzing layout...
 
 ## Installation
-
-
+Install this (sudo apt-get install portaudio19-dev)
 
 ## Basic Commands
 * One button press will allow the user to say a key word and have the story read to them
