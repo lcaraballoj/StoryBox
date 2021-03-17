@@ -15,11 +15,11 @@ P = pyaudio.PyAudio() #Create interface to PortAudio
 global key_words
 global story_name
 global mic
-global json_file
-global story_keyword_json
+# global json_file
+# global story_keyword_json
 global story_keyword_csv
 
-story_keyword_json = "stories_keywords.json"
+# story_keyword_json = "stories_keywords.json"
 story_keyword_csv = "stories_keywords.csv"
 
 json_file = "GCPKey.json"
