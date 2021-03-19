@@ -193,7 +193,7 @@ def story_name():
         try:
             story = r.recognize_google_cloud(audio, language = 'en-US')
             print("You said: " + story)
-            return story.strip()
+            return story.strip() #Get rid of spaces at beginning and end of string
 
         #Exceptions/Error Catching
         except sr.UnknownValueError as u:
@@ -204,10 +204,11 @@ def story_name():
 
 #Function to define a keyword
 def define_keyword_storyname():
-    #global variable
+    #global variables
     global temp_story_keyword
     global story_title
-    #Setup dictionary
+
+    #Setup temporary dictionary to hold key and values
     temp_story_keyword = {}
 
     #Setup Google Speech-to-Text evironment
@@ -224,9 +225,11 @@ def define_keyword_storyname():
     try:
         recog = r.recognize_google_cloud(audio, language = 'en-US')
         print("You said: " + recog)
+        #Call "remove" function to take away spaces in story name
         story_title = remove(story_name())
-        temp_story_keyword[recog.strip()] = story_title #Call story_name function and set that to pair with the keyword
-        print("Recorded in CSV File")
+        #Call story_name function and set that to pair with the keyword
+        temp_story_keyword[recog.strip()] = story_title
+        print("Recorded in CSV File") #Debug
 
         #Append data to json file to save
         # with open(story_keyword_json, 'a') as f:
@@ -250,6 +253,7 @@ def define_keyword_storyname():
     except sr.RequestError as e:
         print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
 
+#Function to take CSV and make a list of dictionaries
 def csv_to_dictionary_list():
     global story_keyword
 
@@ -261,6 +265,7 @@ def csv_to_dictionary_list():
         # print list of dict i.e. rows
         print(story_keyword)
 
+        #Returns list of dictionaries
         return story_keyword
 
 #Function to remove spaces in a string
