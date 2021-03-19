@@ -30,10 +30,11 @@ To setup the Raspberry Pi look at the Fritzing layout...
 ## Installation
 1. `Git clone https://github.com/confuzzled-equation/StoryBox.git`
 2. Install: `sudo apt-get install portaudio19-dev`
-3. Open command prompt and cd into folder
-4. Run: `pip install -r requirements.txt`
-5. Run: **`SpeakCommand.py`** first to get all the command audio files needed
-6. Open **`StoryBox.py`** and make sure to add your json key and change `json_file = ` to your json key file name
+3. Install: `sudo apt-get install python-rpi.gpio python3-rpi.gpio`
+4. Open command prompt and cd into folder
+5. Run: `pip install -r requirements.txt`
+6. Run: **`SpeakCommand.py`** first to get all the command audio files needed
+7. Open **`StoryBox.py`** and make sure to add your json key and change `json_file = ` to your json key file name
 
 ## Basic Commands
 * One button press will allow the user to say a key word and have the story read to them
