@@ -17,7 +17,8 @@ This project is a voice box that is triggered by a button and relies on voice co
 ## Technologies
 * [Python 3.8.1](https://www.python.org/)
 * [PyAudio](https://pypi.org/project/PyAudio/)
-* [Google Cloud Speech-to-Text](https://cloud.google.com/speech-to-text/)
+* [Google Cloud Speech-to-Text](https://cloud.google.com/speech-to-text/docs)
+* [Google Cloud Text-to-Speech](https://cloud.google.com/text-to-speech/docs)
 
 ## Hardware 
 1. Raspberry Pi
