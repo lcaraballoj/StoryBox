@@ -44,12 +44,12 @@ To setup the Raspberry Pi look at the Fritzing layout...
 13. Open **`StoryBox.py`** and make sure your json key is in the right location and change `json_file = ` to your json key file name
 
 ## Basic Commands
-* One button press will allow the user to say a key word and have the story read to them
-    Once story is being read:
-      * One button press will pause the story
-      * Two button presses will cancel the story
-* Two button presses will allow a person to record a story, set a key word, and story name
-* Three button presses will allow for anothe key word to be set for a story title that already exists
+* One button press will allow the user to say a key word and have the story assoicated with that key word, read to them
+    * Once story is playing:
+        * One button press will pause the story
+        * Two button presses will cancel the story
+* Two button presses will allow a person to record a story, set a key word and story title that will be associated with it
+* Three button presses will allow for another key word to be set for an already existing story title
 
 ## Recording a Story and Setting Story Name and Key Words
 To record a story simply press the button twice. You will then be prompted to say a key word and then a story name. After that you can read the story and when done reading the story press the button to stop. Your recording will then be played back to you and you can choose to keep it or discard it. 
