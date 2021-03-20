@@ -30,8 +30,8 @@ To setup the Raspberry Pi look at the Fritzing layout...
 
 ## Installation
 1. `Git clone https://github.com/confuzzled-equation/StoryBox.git`
-2. Install: `sudo apt-get install portaudio19-dev`**May not need (check)**
-3. Install: `sudo apt-get install python-rpi.gpio python3-rpi.gpio`**Only for Raspberry Pi**
+2. Install: `sudo apt-get install portaudio19-dev` **May not need (check)**
+3. Install: `sudo apt-get install python-rpi.gpio python3-rpi.gpio` **Only for Raspberry Pi**
 4. Open command prompt and cd into folder
 5. Run: `pip install -r requirements.txt`
 6. Run: **`SpeakCommand.py`** first to get all the command audio files needed
