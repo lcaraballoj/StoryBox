@@ -30,12 +30,15 @@ To setup the Raspberry Pi look at the Fritzing layout...
 
 ## Installation
 1. `Git clone https://github.com/confuzzled-equation/StoryBox.git`
-2. Install: `sudo apt-get install portaudio19-dev`
-3. Install: `sudo apt-get install python-rpi.gpio python3-rpi.gpio`
+2. Install: `sudo apt-get install portaudio19-dev`**May not need (check)**
+3. Install: `sudo apt-get install python-rpi.gpio python3-rpi.gpio`**Only for Raspberry Pi**
 4. Open command prompt and cd into folder
 5. Run: `pip install -r requirements.txt`
 6. Run: **`SpeakCommand.py`** first to get all the command audio files needed
-7. Open **`StoryBox.py`** and make sure to add your json key and change `json_file = ` to your json key file name
+7. Make a project in Google Cloud ![Make New Project](https://user-images.githubusercontent.com/71469786/111881416-af069800-8986-11eb-9903-bd5cb28b31a1.gif)
+8. Add Google Speech-to-Text and Google Text-to-Speech APIs![Get APIs](https://user-images.githubusercontent.com/71469786/111881568-5388da00-8987-11eb-888e-9f2e762ee281.gif)
+9. Make a service account and save json key to same file location that the code is in ![Service Account and JSON Key](https://user-images.githubusercontent.com/71469786/111881838-d52d3780-8988-11eb-95d6-68a31a8f0b4d.gif)
+10. Open **`StoryBox.py`** and make sure your json key is in the right location and change `json_file = ` to your json key file name
 
 ## Basic Commands
 * One button press will allow the user to say a key word and have the story read to them
