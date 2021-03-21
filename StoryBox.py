@@ -8,6 +8,7 @@ import csv
 
 
 from csv import DictReader
+from pygame import mixer
 
 CHUNK = 1024
 P = pyaudio.PyAudio() #Create interface to PortAudio
@@ -83,33 +84,67 @@ class RecordSoundFile():
 
 #Class to play wav file
 class PlaySound():
-    #Function that is always initiated
+    # #Function that is always initiated
+    # def __init__(self, filename):
+    #     self.filename = filename
+    #     self.chunk = CHUNK
+    #
+    # #Function to open and play file
+    # def play(self):
+    #     wf = wave.open(self.filename, 'rb')             #Open file
+    #     p = P                                           #Create interface to PortAudio
+    #
+    #     #Open Stream
+    #     stream = P.open(format = p.get_format_from_width(wf.getsampwidth()),
+    #                     channels = wf.getnchannels(),
+    #                     rate = wf.getframerate(),
+    #                     output = True)
+    #     #Read data in file
+    #     data = wf.readframes(self.chunk)
+    #
+    #     #Continue to read data until end of file
+    #     while data != '':
+    #         stream.write(data)
+    #         data = wf.readframes(self.chunk)
+    #
+    #     #Close stream and terminate PortAudio
+    #     stream.close()
+    #     p.terminate()
+
     def __init__(self, filename):
         self.filename = filename
-        self.chunk = CHUNK
 
-    #Function to open and play file
     def play(self):
-        wf = wave.open(self.filename, 'rb')             #Open file
-        p = P                                           #Create interface to PortAudio
+        mixer.init()
+        mixer.music.load(self.filename)
+        mixer.music.set_volume(0.5)
+        mixer.music.play()
 
-        #Open Stream
-        stream = P.open(format = p.get_format_from_width(wf.getsampwidth()),
-                        channels = wf.getnchannels(),
-                        rate = wf.getframerate(),
-                        output = True)
-        #Read data in file
-        data = wf.readframes(self.chunk)
+    def play_pause(self):
+        mixer.init()
+        mixer.music.load(self.filename)
+        mixer.music.set_volume(0.5)
+        mixer.music.play()
 
-        #Continue to read data until end of file
-        while data != '':
-            stream.write(data)
-            data = wf.readframes(self.chunk)
+        while True:
 
-        #Close stream and terminate PortAudio
-        stream.close()
-        p.terminate()
+            print("Press 'p' to pause, 'r' to resume")
+            print("Press 'e' to exit the program")
+            query = input("  ")
 
+            if query == 'p':
+
+                # Pausing the music
+                mixer.music.pause()
+            elif query == 'r':
+
+                # Resuming the music
+                mixer.music.unpause()
+            elif query == 'e':
+
+                # Stop the mixer
+                mixer.music.stop()
+                break
 #Class to find if word spoken is a keyword
 class FindKeyWord():
     # #Function that is always initiated
@@ -130,6 +165,8 @@ class FindKeyWord():
         #Using the microphone as the source of audio listen for words
         with file as source:
             print("say something!!.....")
+            command = PlaySound("key_word_command.mp3")
+            command.play()
             audio = r.adjust_for_ambient_noise(source)
             audio = r.listen(source)
 
@@ -187,6 +224,8 @@ def story_name():
 
         with file as source:
             print("What is the story name for the key word?")
+            command = PlaySound("story_name_set.mp3")
+            command.play()
             audio = r.adjust_for_ambient_noise(source)
             audio = r.listen(source)
 
@@ -219,6 +258,8 @@ def define_keyword_storyname():
 
     with file as source:
         print("Say a word to set it as a key word")
+        command = PlaySound("key_word_Set.mp3")
+        command.play()
         audio = r.adjust_for_ambient_noise(source)
         audio = r.listen(source)
 
@@ -294,7 +335,7 @@ def main():
             story_name = keyWord.recognize()
 
             story = PlaySound(story_name)
-            story.play()
+            story.play_pause()
 
         # f = open(story_keyword_json)
         # story_keyword = json.load(f)
