@@ -3,4 +3,5 @@ google-api-python-client
 google-cloud-speech
 oauth2client
 SpeechRecognition
---upgrade google-cloud-texttospeech
+google-cloud-texttospeech
+pygame
