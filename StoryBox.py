@@ -26,7 +26,7 @@ story_keyword_csv = "stories_keywords.csv"
 json_file = "GCPKey.json"
 
 #Set mic index
-mic = 0
+mic = 1
 
 #Class to record a wav file
 class RecordSoundFile():
