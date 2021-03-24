@@ -21,6 +21,7 @@ global mic
 global story_keyword_csv
 global story_name
 
+buttonPin = 10
 count = 0
 mic = 0
 story_keyword_csv = "stories_keywords.csv"
@@ -29,7 +30,7 @@ json_file = "GCPKey.json"
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(10, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+GPIO.setup(buttonPin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
 #Class to record a waw file
 class RecordSoundFile():
@@ -100,7 +101,7 @@ class PlaySound():
         mixer.music.set_volume(0.5)
         mixer.music.play()
 
-        button_pause_play()
+        GPIO.add_event_detect(buttonPin, GPIO.RISING, callback = button_pause_play(), bouncetime = 200)
 
 #Class to find if word spoken is a keyword
 class FindKeyWord():
@@ -259,6 +260,7 @@ def button_pause_play():
         elif (count == 2):
             print ("Play")
             mixer.music.play()
+            count = 0
 
         elif (count == 3):
             print ("Stop")

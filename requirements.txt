@@ -5,3 +5,4 @@ oauth2client
 SpeechRecognition
 google-cloud-texttospeech
 pygame
+keyboard
