@@ -101,6 +101,7 @@ class PlaySound():
         mixer.music.set_volume(0.5)
         mixer.music.play()
 
+        #Call button function to play, pause, and stop sound file playing
         GPIO.add_event_detect(buttonPin, GPIO.RISING, callback = button_pause_play(), bouncetime = 200)
 
 #Class to find if word spoken is a keyword
@@ -267,30 +268,55 @@ def button_pause_play():
             mixer.stop()
             break
 
+def button_story_record():
+        while True:
+            count += 1
 
-#Main function
-def main():
-    while True:
-        choice = input("Press 1 to record and 2 to listen: ")
+            if (count == 1):
+                keyWord = FindKeyWord()
+                story_name = keyWord.recognize()
 
-        if choice == '1':
-            newChoice = input("Press 1 to record story and 2 to record key word: ")
-            if newChoice == '1':
+                story = PlaySound(story_name)
+                story.play_pause()
+
+                count = 0
+
+            elif (count == 2):
                 storyname = define_keyword_storyname()          #Call function to set keyword and story name and set story_title to story_name
                 recordStory = RecordSoundFile(storyname+'.wav') #Set file name and call RecordSoundFile class (add .wav to make it a wav file)
                 recordStory.record()                            #Call record functionn in RecordSoundFile class
 
+                count = 0
 
-            if newChoice == '2':
-                define_keyword_storyname()
+#Main function
+def main():
+    while True:
+        print ("Press button once to say a keyword and play a story, and press button twice to record a story \
+                and set a keyword and story")
 
+        #Call button function to record story or play story
+        GPIO.add_event_detect(buttonPin, GPIO.RISING, callback = button_story_record(), bouncetime = 200)
 
-        if choice == '2':
-            keyWord = FindKeyWord()
-            story_name = keyWord.recognize()
-
-            story = PlaySound(story_name)
-            story.play_pause()
+        # choice = input("Press 1 to record and 2 to listen: ")
+        #
+        # if choice == '1':
+        #     newChoice = input("Press 1 to record story and 2 to record key word: ")
+        #     if newChoice == '1':
+        #         storyname = define_keyword_storyname()          #Call function to set keyword and story name and set story_title to story_name
+        #         recordStory = RecordSoundFile(storyname+'.wav') #Set file name and call RecordSoundFile class (add .wav to make it a wav file)
+        #         recordStory.record()                            #Call record functionn in RecordSoundFile class
+        #
+        #
+        #     if newChoice == '2':
+        #         define_keyword_storyname()
+        #
+        #
+        # if choice == '2':
+        #     keyWord = FindKeyWord()
+        #     story_name = keyWord.recognize()
+        #
+        #     story = PlaySound(story_name)
+        #     story.play_pause()
 
 
 #Call main function
