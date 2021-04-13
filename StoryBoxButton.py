@@ -271,7 +271,7 @@ def button_story_record(btn):
 
         while btn.is_active and (diff < hold_time):
             current_time = time.time()
-            diff = start_time + current_time
+            diff = current_time - start_time
 
         if diff < HOLD_TIME:
             keyWord = FindKeyWord()
