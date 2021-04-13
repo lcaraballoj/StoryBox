@@ -1,5 +1,5 @@
 import speech_recognition as sr
-import RPi.GPIO as GPIO
+
 
 import csv
 import keyboard
@@ -10,9 +10,12 @@ import wave
 
 from csv import DictReader
 from pygame import mixer
+from gpiozero import Button
+from datetime import datetime, timdelta
 
 CHUNK = 1024
 P = pyaudio.PyAudio() #Create interface to PortAudio
+HOLD_TIME = 10
 
 #Set global variables
 global count
@@ -268,25 +271,27 @@ def button_pause_play():
             mixer.stop()
             break
 
-def button_story_record():
-        while True:
-            count += 1
+def button_story_record(btn):
+        global HOLD_TIME
 
-            if (count == 1):
-                keyWord = FindKeyWord()
-                story_name = keyWord.recognize()
+        start_time = time.time()
+        diff = 0
 
-                story = PlaySound(story_name)
-                story.play_pause()
+        while btn.is_active and (diff < hold_time):
+            current_time = time.time()
+            diff = start_time + current_time
 
-                count = 0
+        if diff < HOLD_TIME:
+            keyWord = FindKeyWord()
+            storyName = keyWord.recognize()
 
-            elif (count == 2):
-                storyname = define_keyword_storyname()          #Call function to set keyword and story name and set story_title to story_name
-                recordStory = RecordSoundFile(storyname+'.wav') #Set file name and call RecordSoundFile class (add .wav to make it a wav file)
-                recordStory.record()                            #Call record functionn in RecordSoundFile class
+            story = PlaySound(story_name)
+            story.play_pause()
 
-                count = 0
+        else:
+            storyname = define_keyword_storyname()
+            recordStory = RecordSoundFile(storyname + 'wav')
+            recordStory.record()
 
 #Main function
 def main():
@@ -294,29 +299,10 @@ def main():
         print ("Press button once to say a keyword and play a story, and press button twice to record a story \
                 and set a keyword and story")
 
-        #Call button function to record story or play story
-        GPIO.add_event_detect(buttonPin, GPIO.RISING, callback = button_story_record(), bouncetime = 200)
+        btn = Button(2)
+        btn.when_pressed = button_story_record
 
-        # choice = input("Press 1 to record and 2 to listen: ")
-        #
-        # if choice == '1':
-        #     newChoice = input("Press 1 to record story and 2 to record key word: ")
-        #     if newChoice == '1':
-        #         storyname = define_keyword_storyname()          #Call function to set keyword and story name and set story_title to story_name
-        #         recordStory = RecordSoundFile(storyname+'.wav') #Set file name and call RecordSoundFile class (add .wav to make it a wav file)
-        #         recordStory.record()                            #Call record functionn in RecordSoundFile class
-        #
-        #
-        #     if newChoice == '2':
-        #         define_keyword_storyname()
-        #
-        #
-        # if choice == '2':
-        #     keyWord = FindKeyWord()
-        #     story_name = keyWord.recognize()
-        #
-        #     story = PlaySound(story_name)
-        #     story.play_pause()
+
 
 
 #Call main function
