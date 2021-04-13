@@ -11,7 +11,7 @@ import wave
 from csv import DictReader
 from pygame import mixer
 from gpiozero import Button
-from datetime import datetime, timdelta
+from datetime import datetime, timedelta
 
 CHUNK = 1024
 P = pyaudio.PyAudio() #Create interface to PortAudio
@@ -24,16 +24,11 @@ global mic
 global story_keyword_csv
 global story_name
 
-buttonPin = 10
 count = 0
 mic = 0
 story_keyword_csv = "stories_keywords.csv"
 
 json_file = "GCPKey.json"
-
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(buttonPin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
 #Class to record a waw file
 class RecordSoundFile():
@@ -103,9 +98,6 @@ class PlaySound():
         mixer.music.load(self.filename)
         mixer.music.set_volume(0.5)
         mixer.music.play()
-
-        #Call button function to play, pause, and stop sound file playing
-        GPIO.add_event_detect(buttonPin, GPIO.RISING, callback = button_pause_play(), bouncetime = 200)
 
 #Class to find if word spoken is a keyword
 class FindKeyWord():
