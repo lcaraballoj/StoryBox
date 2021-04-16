@@ -146,7 +146,7 @@ class FindKeyWord():
         #Exceptions/Error Catching
         except sr.UnknownValueError:
             print("Google Cloud Speech Recognition could not understand audio")
-            
+
         except sr.RequestError as e:
             print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
 
@@ -298,8 +298,6 @@ def main():
 
         btn = Button(2)
         btn.when_pressed = button_story_record
-
-
 
 
 #Call main function

@@ -152,6 +152,8 @@ class FindKeyWord():
 
             recog = recog.strip()
 
+            story_name = ''
+
             #Search dictionary for key
             for key in story_keyword:
                 #If the key matches the spoken word
@@ -160,12 +162,14 @@ class FindKeyWord():
                     story_name = res.get('story')
                     print(story_name) #Print story name
                     story_name = story_name + '.wav' #Add .wav to storyname to match it with the wav sound files
-                    return story_name
 
-                else:
-                    print("Not Found") #Debugging (need to find way to just say not found if keyword is not found in any list)
-                    story_name = ''
-                    return story_name    #Returns empty string for exception handeling
+
+            if story_name == '':
+                print("Not Found")
+
+            return story_name
+
+
 
                 # found = recog.find(key['key'])
                 #
@@ -321,6 +325,9 @@ def main():
             #If the string is empty then the keyword was not found
             if (story_name == ''):
                 print("Not Found")
+                notFound = PlaySound("key_word_not_found.mp3")
+                notFound.play()
+
 
             else:
                 story = PlaySound(story_name)
