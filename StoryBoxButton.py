@@ -244,24 +244,47 @@ def remove(string_input):
     return string_input.replace(" ", "")
 
 #Function for button press once story is being read
-def button_pause_play():
-    while True:
-        count += 1
+def button_pause_play(btn):
+    global HOLD_TIME
 
-        if (count == 1):
-            print ("Paused")
+    pause = False
+    start_time = time.time()
+    diff = 0
+
+    while btn.is_active and (diff < hold_time):
+        current_time = time.time()
+        diff = current_time - start_time
+
+        if diff < HOLD_TIME:
+            print("Paused")
             mixer.music.pause()
-            count = 0
+            pause = True
 
-        elif (count == 2):
-            print ("Play")
+        if (diff < HOLD_TIME and pause == True):
+            print("Play")
             mixer.music.play()
-            count = 0
 
-        elif (count == 3):
-            print ("Stop")
+        else:
+            print("Stop")
             mixer.stop()
-            break
+
+    # while True:
+    #     count += 1
+    # 
+    #     if (count == 1):
+    #         print ("Paused")
+    #         mixer.music.pause()
+    #         count = 0
+    #
+    #     elif (count == 2):
+    #         print ("Play")
+    #         mixer.music.play()
+    #         count = 0
+    #
+    #     elif (count == 3):
+    #         print ("Stop")
+    #         mixer.stop()
+    #         break
 
 def button_story_record(btn):
         global HOLD_TIME

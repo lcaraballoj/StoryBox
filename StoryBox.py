@@ -120,6 +120,7 @@ class PlaySound():
                 # Stop the mixer
                 mixer.music.stop()
                 break
+
 #Class to find if word spoken is a keyword
 class FindKeyWord():
     # #Function that is always initiated
@@ -149,16 +150,6 @@ class FindKeyWord():
         try:
             recog = r.recognize_google_cloud(audio, language = 'en-US')
             print("You said: " + recog)         #Debugger (prints what you said)
-            # found = recog.find(self.key)        #Search for keyword
-
-            # if (found == -1):                    #If keyword not found
-            #     print ("Not found")
-            # else:                                #If key word is found
-            #     print ("Found")
-            #
-            #     #Call PlaySound class
-            #     play = PlaySound(self.file)
-            #     play.play()
 
             #Convert CSV file to dictionary
             csv_to_dictionary_list()
@@ -200,6 +191,7 @@ class FindKeyWord():
         except sr.RequestError as e:
             print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
 
+#Function to define a storyname
 def story_name():
         global story
 
