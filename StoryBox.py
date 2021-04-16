@@ -11,12 +11,11 @@ from pygame import mixer            #Used to play, pause, and stop sound
 
 CHUNK = 1024
 P = pyaudio.PyAudio() #Create interface to PortAudio
+
 #Set a global variables
 global key_words
 global story_name
 global mic
-# global json_file
-# global story_keyword_json
 global story_keyword_csv
 
 # csv file that holds the key words and story names
@@ -123,11 +122,6 @@ class PlaySound():
 
 #Class to find if word spoken is a keyword
 class FindKeyWord():
-    # #Function that is always initiated
-    # def __init__(self, key, file):
-    #     self.key = key
-    #     self.file = file
-
     #Function to convert speech-to-text and search for keyword
     def recognize(self):
         global story_name
@@ -155,41 +149,49 @@ class FindKeyWord():
             csv_to_dictionary_list()
 
             res = None
+
+            recog = recog.strip()
+
             #Search dictionary for key
             for key in story_keyword:
-                # #If the key matches the spoken word
-                # if key['key'] == recog.strip():
-                #     res = key
-                #     # printing result
-                #     # print("The list of dictionaries is: " + str(res)) #Making sure that it is a list of dictionaries
-                #     story_name = res.get('story')
-                #     print(story_name) #Print story name
-                #     story_name = story_name + '.wav' #Add .wav to storyname to match it with the wav sound files
-                #     return story_name
-                #
-                # else:
-                #     print("Not Found") #Debugging (need to find way to just say not found if keyword is not found in any list)
-
-                found = recog.find(key['key'])
-
-                if (found == -1):                    #If keyword not found
-                    print ("Not found")
-                else:                                #If key word is found
-                    print ("Found")
+                #If the key matches the spoken word
+                if key['key'] == recog.strip():
                     res = key
-                    story_name = res.get('story')       #Get story name from key
-                    print(story_name)                   #Debug
-                    story_name = story_name + '.wav'    #Add .wav to storyname to get correct sound file
+                    story_name = res.get('story')
+                    print(story_name) #Print story name
+                    story_name = story_name + '.wav' #Add .wav to storyname to match it with the wav sound files
                     return story_name
+
+                else:
+                    print("Not Found") #Debugging (need to find way to just say not found if keyword is not found in any list)
+                    story_name = ''
+                    return story_name    #Returns empty string for exception handeling
+
+                # found = recog.find(key['key'])
+                #
+                # if (found == -1):                    #If keyword not found
+                #     print ("Not found")
+                #
+                # else:                                #If key word is found
+                #     print ("Found")
+                #     res = key
+                #     story_name = res.get('story')       #Get story name from key
+                #     print(story_name)                   #Debug
+                #     story_name = story_name + '.wav'    #Add .wav to storyname to get correct sound file
+                #     return story_name
 
 
         #Exceptions/Error Catching
-        except sr.UnknownValueError as u:
-            recognize(self)
-            # print(u)
-            # print("Google Cloud Speech Recognition could not understand audio")
+        except sr.UnknownValueError:
+            print("Google Cloud Speech Recognition could not understand audio")
+            story_name = ''
+            return story_name
+
         except sr.RequestError as e:
-            print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
+            print("Could not request results from Google Cloud Speech Recognition service")
+            story_name = ''
+            return story_name
+
 
 #Function to define a storyname
 def story_name():
@@ -214,11 +216,13 @@ def story_name():
             return story.strip() #Get rid of spaces at beginning and end of string
 
         #Exceptions/Error Catching
-        except sr.UnknownValueError as u:
-            print(u)
+        except sr.UnknownValueError:
             print("Google Cloud Speech Recognition could not understand audio")
+            story_name()
+
         except sr.RequestError as e:
-            print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
+            print("Could not request results from Google Cloud Speech Recognition service")
+            story_name()
 
 #Function to define a keyword
 def define_keyword_storyname():
@@ -251,10 +255,6 @@ def define_keyword_storyname():
         temp_story_keyword[recog.strip()] = story_title
         print("Recorded in CSV File") #Debug
 
-        #Append data to json file to save
-        # with open(story_keyword_json, 'a') as f:
-        #     json.dump(story_keyword, f)
-
         #Append data to csv file to save
         with open(story_keyword_csv, 'a') as f:
             writer = csv.writer(f)
@@ -267,11 +267,13 @@ def define_keyword_storyname():
         # return temp_story_keyword
 
     #Exceptions/Error Catching
-    except sr.UnknownValueError as u:
-        print(u)
+    except sr.UnknownValueError:
         print("Google Cloud Speech Recognition could not understand audio")
+        define_keyword_storyname()
+
     except sr.RequestError as e:
         print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
+        define_keyword_storyname()
 
 #Function to take CSV and make a list of dictionaries
 def csv_to_dictionary_list():
@@ -313,21 +315,13 @@ def main():
             keyWord = FindKeyWord()
             story_name = keyWord.recognize()
 
-            story = PlaySound(story_name)
-            story.play_pause()
+            #If the string is empty then the keyword was not found
+            if (story_name == ''):
+                print("Not Found")
 
-        # f = open(story_keyword_json)
-        # story_keyword = json.load(f)
-
-        # #Add CSV elements to a dictionary
-        # filename ="stories_keywords.csv"
-        #
-        # # opening the file using "with"
-        # # statement
-        # with open(filename, 'r') as data:
-        #
-        #     for line in csv.DictReader(data):
-        #         print(line)
+            else:
+                story = PlaySound(story_name)
+                story.play_pause()
 
 
 

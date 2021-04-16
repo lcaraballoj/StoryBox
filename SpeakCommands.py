@@ -92,3 +92,9 @@ keyWordSet.talk()
 #Command to set story title
 storyNameSet = Speak("Say the name of the story", "story_name_set.mp3")
 storyNameSet.talk()
+
+keyWordNotFound = Speak("The key word was not found. Try again.", "key_word_not_found.mp3")
+keyWordNotFound.talk()
+
+instructionCommand = Speak("Short press the button to listen to a story. Long press the button to record a story", "instructionCommand.mp3")
+instructionCommand.talk()
