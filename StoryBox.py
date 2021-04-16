@@ -1,14 +1,13 @@
-import speech_recognition as sr
-import os
-import keyboard
-import pyaudio
-import wave
-# import json
-import csv
+import speech_recognition as sr     #Spech Recognition
+import os                           #Operating system for speech-to-text
+import keyboard                     #Keyboard Library
+import pyaudio                      #Pyaudio to record sound
+import wave                         #Ability to play and save wave files
+import csv                          #csv files and functions
 
 
-from csv import DictReader
-from pygame import mixer
+from csv import DictReader          #Used to add values and read values from a csv file
+from pygame import mixer            #Used to play, pause, and stop sound
 
 CHUNK = 1024
 P = pyaudio.PyAudio() #Create interface to PortAudio
@@ -20,9 +19,10 @@ global mic
 # global story_keyword_json
 global story_keyword_csv
 
-# story_keyword_json = "stories_keywords.json"
+# csv file that holds the key words and story names
 story_keyword_csv = "stories_keywords.csv"
 
+#json file that is needed for GCP (Google Cloud Platform)
 json_file = "GCPKey.json"
 
 #Set mic index
@@ -84,42 +84,17 @@ class RecordSoundFile():
 
 #Class to play wav file
 class PlaySound():
-    # #Function that is always initiated
-    # def __init__(self, filename):
-    #     self.filename = filename
-    #     self.chunk = CHUNK
-    #
-    # #Function to open and play file
-    # def play(self):
-    #     wf = wave.open(self.filename, 'rb')             #Open file
-    #     p = P                                           #Create interface to PortAudio
-    #
-    #     #Open Stream
-    #     stream = P.open(format = p.get_format_from_width(wf.getsampwidth()),
-    #                     channels = wf.getnchannels(),
-    #                     rate = wf.getframerate(),
-    #                     output = True)
-    #     #Read data in file
-    #     data = wf.readframes(self.chunk)
-    #
-    #     #Continue to read data until end of file
-    #     while data != '':
-    #         stream.write(data)
-    #         data = wf.readframes(self.chunk)
-    #
-    #     #Close stream and terminate PortAudio
-    #     stream.close()
-    #     p.terminate()
-
+    #Function that is always initiated
     def __init__(self, filename):
         self.filename = filename
 
     def play(self):
         mixer.init()
-        mixer.music.load(self.filename)
-        mixer.music.set_volume(0.5)
-        mixer.music.play()
+        mixer.music.load(self.filename)         #Load file
+        mixer.music.set_volume(0.5)             #Set volume
+        mixer.music.play()                      #Play sound volume at desired volume
 
+    #Function to play, pause, resume, and stop an audio file
     def play_pause(self):
         mixer.init()
         mixer.music.load(self.filename)
@@ -127,7 +102,7 @@ class PlaySound():
         mixer.music.play()
 
         while True:
-
+            #Pause, resume, exit
             print("Press 'p' to pause, 'r' to resume")
             print("Press 'e' to exit the program")
             query = input("  ")
@@ -191,25 +166,37 @@ class FindKeyWord():
             res = None
             #Search dictionary for key
             for key in story_keyword:
-                #If the key matches the spoken word
-                if key['key'] == recog.strip():
+                # #If the key matches the spoken word
+                # if key['key'] == recog.strip():
+                #     res = key
+                #     # printing result
+                #     # print("The list of dictionaries is: " + str(res)) #Making sure that it is a list of dictionaries
+                #     story_name = res.get('story')
+                #     print(story_name) #Print story name
+                #     story_name = story_name + '.wav' #Add .wav to storyname to match it with the wav sound files
+                #     return story_name
+                #
+                # else:
+                #     print("Not Found") #Debugging (need to find way to just say not found if keyword is not found in any list)
+
+                found = recog.find(key['key'])
+
+                if (found == -1):                    #If keyword not found
+                    print ("Not found")
+                else:                                #If key word is found
+                    print ("Found")
                     res = key
-                    # printing result
-                    # print("The list of dictionaries is: " + str(res)) #Making sure that it is a list of dictionaries
-                    story_name = res.get('story')
-                    print(story_name) #Print story name
-                    story_name = story_name + '.wav' #Add .wav to storyname to match it with the wav sound files
+                    story_name = res.get('story')       #Get story name from key
+                    print(story_name)                   #Debug
+                    story_name = story_name + '.wav'    #Add .wav to storyname to get correct sound file
                     return story_name
 
-                    break
-
-                else:
-                    print("Not Found") #Debugging (need to find way to just say not found if keyword is not found in any list)
 
         #Exceptions/Error Catching
         except sr.UnknownValueError as u:
-            print(u)
-            print("Google Cloud Speech Recognition could not understand audio")
+            recognize(self)
+            # print(u)
+            # print("Google Cloud Speech Recognition could not understand audio")
         except sr.RequestError as e:
             print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
 
