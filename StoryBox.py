@@ -218,11 +218,11 @@ def story_name():
         #Exceptions/Error Catching
         except sr.UnknownValueError:
             print("Google Cloud Speech Recognition could not understand audio")
-            story_name()
+            notRecognized = PlaySound("couldNotUnderstand.mp3")
+            notRecognized.play()
 
         except sr.RequestError as e:
             print("Could not request results from Google Cloud Speech Recognition service")
-            story_name()
 
 #Function to define a keyword
 def define_keyword_storyname():
@@ -269,11 +269,11 @@ def define_keyword_storyname():
     #Exceptions/Error Catching
     except sr.UnknownValueError:
         print("Google Cloud Speech Recognition could not understand audio")
-        define_keyword_storyname()
+        notRecognized = PlaySound("couldNotUnderstand.mp3")
+        notRecognized.play()
 
     except sr.RequestError as e:
         print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
-        define_keyword_storyname()
 
 #Function to take CSV and make a list of dictionaries
 def csv_to_dictionary_list():
@@ -296,6 +296,9 @@ def remove(string_input):
 
 #Main function
 def main():
+    instruction = PlaySound("instructionCommand.mp3")
+    instruction.play()
+
     while True:
         choice = input("Press 1 to record and 2 to listen: ")
 

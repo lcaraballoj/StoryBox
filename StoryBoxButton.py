@@ -144,9 +144,9 @@ class FindKeyWord():
                     print("Not Found") #Debugging (need to find way to just say not found if keyword is not found in any list)
 
         #Exceptions/Error Catching
-        except sr.UnknownValueError as u:
-            print(u)
+        except sr.UnknownValueError:
             print("Google Cloud Speech Recognition could not understand audio")
+            
         except sr.RequestError as e:
             print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
 
@@ -172,9 +172,9 @@ def story_name():
             return story.strip() #Get rid of spaces at beginning and end of string
 
         #Exceptions/Error Catching
-        except sr.UnknownValueError as u:
-            print(u)
+        except sr.UnknownValueError:
             print("Google Cloud Speech Recognition could not understand audio")
+
         except sr.RequestError as e:
             print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
 
@@ -218,9 +218,9 @@ def define_keyword_storyname():
         return story_title
 
     #Exceptions/Error Catching
-    except sr.UnknownValueError as u:
-        print(u)
+    except sr.UnknownValueError:
         print("Google Cloud Speech Recognition could not understand audio")
+
     except sr.RequestError as e:
         print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
 
@@ -267,24 +267,6 @@ def button_pause_play(btn):
         else:
             print("Stop")
             mixer.stop()
-
-    # while True:
-    #     count += 1
-    # 
-    #     if (count == 1):
-    #         print ("Paused")
-    #         mixer.music.pause()
-    #         count = 0
-    #
-    #     elif (count == 2):
-    #         print ("Play")
-    #         mixer.music.play()
-    #         count = 0
-    #
-    #     elif (count == 3):
-    #         print ("Stop")
-    #         mixer.stop()
-    #         break
 
 def button_story_record(btn):
         global HOLD_TIME

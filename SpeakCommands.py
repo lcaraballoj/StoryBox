@@ -98,3 +98,6 @@ keyWordNotFound.talk()
 
 instructionCommand = Speak("Short press the button to listen to a story. Long press the button to record a story", "instructionCommand.mp3")
 instructionCommand.talk()
+
+couldNotUnderstand = Speak("Could not understand.", "couldNotUnderstand.mp3")
+couldNotUnderstand.talk()
