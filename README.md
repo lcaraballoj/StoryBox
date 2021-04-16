@@ -37,7 +37,7 @@ To setup the Raspberry Pi look at the Fritzing layout...
 
 6. Make a project in Google Cloud ![Make New Project](https://user-images.githubusercontent.com/71469786/111881416-af069800-8986-11eb-9903-bd5cb28b31a1.gif)
 
-7. Add Google Speech-to-Text and Google Text-to-Speech APIs![Get APIs](https://user-images.githubusercontent.com/71469786/111881568-5388da00-8987-11eb-888e-9f2e762ee281.gif)
+7. Add Google Speech-to-Text and Google Text-to-Speech APIs ![Get APIs](https://user-images.githubusercontent.com/71469786/111881568-5388da00-8987-11eb-888e-9f2e762ee281.gif)
 
 8. Make a service account and save json key to same file location that the code is in ![Service Account and JSON Key](https://user-images.githubusercontent.com/71469786/111881838-d52d3780-8988-11eb-95d6-68a31a8f0b4d.gif)
 
@@ -62,6 +62,6 @@ To record a story simply press the button twice. You will then be prompted to sa
 To listen to a story simply press the button once, wait for the beep, and then say a key word. The story will then be played and can be pause with one button press or canceled with two button presses. 
 
 ## Team Members
-- Linnea Caraballo
-- Chelsea Coelho
-- Katherine Durkin
+- [Linnea Caraballo](https://github.com/confuzzled-equation)
+- [Chelsea Coelho](https://github.com/chelseacoelho)
+- [Katherine Durkin](https://github.com/StrawberryKat)
