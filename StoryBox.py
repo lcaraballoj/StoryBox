@@ -27,6 +27,9 @@ json_file = "GCPKey.json"
 #Set mic index
 mic = 1
 
+#Set story
+story = ''
+
 #Class to record a wav file
 class RecordSoundFile():
     #Function that is always initiated
@@ -222,8 +225,9 @@ def story_name():
         #Exceptions/Error Catching
         except sr.UnknownValueError:
             print("Google Cloud Speech Recognition could not understand audio")
-            notRecognized = PlaySound("couldNotUnderstand.mp3")
-            notRecognized.play()
+            story_name()
+            # notRecognized = PlaySound("couldNotUnderstand.mp3")
+            # notRecognized.play()
 
         except sr.RequestError as e:
             print("Could not request results from Google Cloud Speech Recognition service")
@@ -273,8 +277,9 @@ def define_keyword_storyname():
     #Exceptions/Error Catching
     except sr.UnknownValueError:
         print("Google Cloud Speech Recognition could not understand audio")
-        notRecognized = PlaySound("couldNotUnderstand.mp3")
-        notRecognized.play()
+        define_keyword_storyname()
+        # notRecognized = PlaySound("couldNotUnderstand.mp3")
+        # notRecognized.play()
 
     except sr.RequestError as e:
         print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
