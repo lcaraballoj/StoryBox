@@ -146,7 +146,7 @@ class FindKeyWord():
         #Try to convert speech to text
         try:
             recog = r.recognize_google_cloud(audio, language = 'en-US')
-            print("You said: " + recog)         #Debugger (prints what you said)
+            print("You said: " + recog)                 #Debugger (prints what you said)
 
             #Convert CSV file to dictionary
             csv_to_dictionary_list()
@@ -155,7 +155,7 @@ class FindKeyWord():
 
             recog = recog.strip()
 
-            story_name = ''
+            story_name = ''                             #Set story_name as an empty string
 
             #Search dictionary for key
             for key in story_keyword:
@@ -163,8 +163,8 @@ class FindKeyWord():
                 if key['key'] == recog.strip():
                     res = key
                     story_name = res.get('story')
-                    print(story_name) #Print story name
-                    story_name = story_name + '.wav' #Add .wav to storyname to match it with the wav sound files
+                    print(story_name)                   #Print story name (debug)
+                    story_name = story_name + '.wav'    #Add .wav to storyname to match it with the wav sound files
 
 
             if story_name == '':
@@ -225,9 +225,9 @@ def story_name():
         #Exceptions/Error Catching
         except sr.UnknownValueError:
             print("Google Cloud Speech Recognition could not understand audio")
+            notRecognized = PlaySound("couldNotUnderstand.mp3")
+            notRecognized.play()
             story_name()
-            # notRecognized = PlaySound("couldNotUnderstand.mp3")
-            # notRecognized.play()
 
         except sr.RequestError as e:
             print("Could not request results from Google Cloud Speech Recognition service")
@@ -277,9 +277,9 @@ def define_keyword_storyname():
     #Exceptions/Error Catching
     except sr.UnknownValueError:
         print("Google Cloud Speech Recognition could not understand audio")
+        notRecognized = PlaySound("couldNotUnderstand.mp3")
+        notRecognized.play()
         define_keyword_storyname()
-        # notRecognized = PlaySound("couldNotUnderstand.mp3")
-        # notRecognized.play()
 
     except sr.RequestError as e:
         print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
