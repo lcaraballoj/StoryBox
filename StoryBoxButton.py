@@ -1,6 +1,4 @@
 import speech_recognition as sr
-
-
 import csv
 import keyboard
 import pyaudio
@@ -16,6 +14,7 @@ from datetime import datetime, timedelta
 CHUNK = 1024
 P = pyaudio.PyAudio() #Create interface to PortAudio
 HOLD_TIME = 10
+SLEEP_TIME = 2
 
 #Set global variables
 global count
@@ -146,9 +145,19 @@ class FindKeyWord():
         #Exceptions/Error Catching
         except sr.UnknownValueError:
             print("Google Cloud Speech Recognition could not understand audio")
+            story_name = ''
+            notRecognized = PlaySound("couldNotUnderstand.mp3")
+            notRecognized.play()
+            time.sleep(SLEEP_TIME)
+            return story_name
 
         except sr.RequestError as e:
             print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
+            story_name = ''
+            notRecognized = PlaySound("couldNotUnderstand.mp3")
+            notRecognized.play()
+            time.sleep(SLEEP_TIME)
+            return story_name
 
 def story_name():
         global story
@@ -174,9 +183,17 @@ def story_name():
         #Exceptions/Error Catching
         except sr.UnknownValueError:
             print("Google Cloud Speech Recognition could not understand audio")
+            notRecognized = PlaySound("couldNotUnderstand.mp3")
+            notRecognized.play()
+            time.sleep(SLEEP_TIME)
+            story_name()
 
         except sr.RequestError as e:
             print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
+            notRecognized = PlaySound("couldNotUnderstand.mp3")
+            notRecognized.play()
+            time.sleep(SLEEP_TIME)
+            story_name()
 
 #Function to define a keyword
 def define_keyword_storyname():
@@ -220,9 +237,17 @@ def define_keyword_storyname():
     #Exceptions/Error Catching
     except sr.UnknownValueError:
         print("Google Cloud Speech Recognition could not understand audio")
+        notRecognized = PlaySound("couldNotUnderstand.mp3")
+        notRecognized.play()
+        time.sleep(SLEEP_TIME)
+        define_keyword_storyname()
 
     except sr.RequestError as e:
         print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
+        notRecognized = PlaySound("couldNotUnderstand.mp3")
+        notRecognized.play()
+        time.sleep(SLEEP_TIME)
+        define_keyword_storyname()
 
 #Function to take CSV and make a list of dictionaries
 def csv_to_dictionary_list():
@@ -274,17 +299,27 @@ def button_story_record(btn):
         start_time = time.time()
         diff = 0
 
+        storyname = ''
+
         while btn.is_active and (diff < hold_time):
             current_time = time.time()
             diff = current_time - start_time
 
+        #Short press activates listen for keyword and then play story if found
         if diff < HOLD_TIME:
             keyWord = FindKeyWord()
             storyName = keyWord.recognize()
 
-            story = PlaySound(story_name)
-            story.play_pause()
+            #If the string is empty then the keyword was not found
+            if (story_name == ''):
+                print("Not Found")
+                notFound = PlaySound("key_word_not_found.mp3")
+                notFound.play()
 
+            else:
+                    story = PlaySound(story_name)
+                    story.play_pause()
+        #Long press activates recording story and setting keyword and story name
         else:
             storyname = define_keyword_storyname()
             recordStory = RecordSoundFile(storyname + 'wav')

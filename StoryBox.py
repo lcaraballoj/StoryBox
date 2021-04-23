@@ -4,6 +4,7 @@ import keyboard                     #Keyboard Library
 import pyaudio                      #Pyaudio to record sound
 import wave                         #Ability to play and save wave files
 import csv                          #csv files and functions
+import time
 
 
 from csv import DictReader          #Used to add values and read values from a csv file
@@ -29,6 +30,8 @@ mic = 1
 
 #Set story
 story = ''
+
+SLEEPTIME = 2
 
 #Class to record a wav file
 class RecordSoundFile():
@@ -192,11 +195,17 @@ class FindKeyWord():
         except sr.UnknownValueError:
             print("Google Cloud Speech Recognition could not understand audio")
             story_name = ''
+            notRecognized = PlaySound("couldNotUnderstand.mp3")
+            notRecognized.play()
+            time.sleep(SLEEPTIME)
             return story_name
 
         except sr.RequestError as e:
             print("Could not request results from Google Cloud Speech Recognition service")
             story_name = ''
+            notRecognized = PlaySound("couldNotUnderstand.mp3")
+            notRecognized.play()
+            time.sleep(SLEEPTIME)
             return story_name
 
 
@@ -231,6 +240,9 @@ def story_name():
 
         except sr.RequestError as e:
             print("Could not request results from Google Cloud Speech Recognition service")
+            notRecognized = PlaySound("couldNotUnderstand.mp3")
+            notRecognized.play()
+            story_name()
 
 #Function to define a keyword
 def define_keyword_storyname():
@@ -279,10 +291,15 @@ def define_keyword_storyname():
         print("Google Cloud Speech Recognition could not understand audio")
         notRecognized = PlaySound("couldNotUnderstand.mp3")
         notRecognized.play()
+        time.sleep(SLEEPTIME)
         define_keyword_storyname()
 
     except sr.RequestError as e:
         print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
+        notRecognized = PlaySound("couldNotUnderstand.mp3")
+        notRecognized.play()
+        time.sleep(SLEEPTIME)
+        define_keyword_storyname()
 
 #Function to take CSV and make a list of dictionaries
 def csv_to_dictionary_list():
@@ -312,15 +329,9 @@ def main():
         choice = input("Press 1 to record and 2 to listen: ")
 
         if choice == '1':
-            newChoice = input("Press 1 to record story and 2 to record key word: ")
-            if newChoice == '1':
-                storyname = define_keyword_storyname()          #Call function to set keyword and story name and set story_title to story_name
-                recordStory = RecordSoundFile(storyname+'.wav') #Set file name and call RecordSoundFile class (add .wav to make it a wav file)
-                recordStory.record()                            #Call record functionn in RecordSoundFile class
-
-
-            if newChoice == '2':
-                define_keyword_storyname()
+            storyname = define_keyword_storyname()          #Call function to set keyword and story name and set story_title to story_name
+            recordStory = RecordSoundFile(storyname+'.wav') #Set file name and call RecordSoundFile class (add .wav to make it a wav file)
+            recordStory.record()                            #Call record functionn in RecordSoundFile class
 
 
         if choice == '2':
@@ -332,7 +343,6 @@ def main():
                 print("Not Found")
                 notFound = PlaySound("key_word_not_found.mp3")
                 notFound.play()
-
 
             else:
                 story = PlaySound(story_name)
