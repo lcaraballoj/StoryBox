@@ -33,10 +33,9 @@ To setup the Raspberry Pi look at the Fritzing layout...
 2. Install: `sudo apt-get install portaudio19-dev` **May not need (check)**
 3. Install: `sudo apt-get install python-rpi.gpio python3-rpi.gpio` **Only for Raspberry Pi**
 4. Open command prompt and cd into folder
-5. Run: `pip install -r requirements.txt`
-      **Note:** on Windows you cannot install PyAudio through pip, use this link: [PyAudio](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio)
-      **Note:** if you get `pygame.error: Failed loading libmpg123.dll` then try uninstalling Pygame and [reinstalling it]
- (https://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame)
+5. Run: `pip install -r requirements.txt` 
+      - **Note:** on Windows you cannot install PyAudio through pip, use this link: [PyAudio](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio)
+      - **Note:** if you get `pygame.error: Failed loading libmpg123.dll` then try uninstalling Pygame and reinstalling it with this link: [Pygame](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame)
 6. Make a project in Google Cloud ![Make New Project](https://user-images.githubusercontent.com/71469786/111881416-af069800-8986-11eb-9903-bd5cb28b31a1.gif)
 
 7. Add Google Speech-to-Text and Google Text-to-Speech APIs ![Get APIs](https://user-images.githubusercontent.com/71469786/111881568-5388da00-8987-11eb-888e-9f2e762ee281.gif)
