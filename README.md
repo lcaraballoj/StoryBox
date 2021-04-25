@@ -47,20 +47,19 @@ To setup the Raspberry Pi look at the Fritzing layout...
 10. Open **`StoryBox.py`** and make sure your json key is in the right location and change `json_file = ` to your json key file name
 
 ## Basic Commands
-* One button press will allow the user to say a key word and have the story assoicated with that key word, read to them
+* A short button press will allow the user to say a key word and have the story assoicated with that key word, read to them
     * Once story is playing:
-        * One button press will pause the story
-        * Two button presses will cancel the story
-* Two button presses will allow a person to record a story, set a key word and story title that will be associated with it
-* Three button presses will allow for another key word to be set for an already existing story title
+        * One button press will cancel the story
+* A long button press (hold for 5 seconds) will allow a person to record a story, set a key word and story title that will be associated with it
 
 ## Recording a Story and Setting Story Name and Key Words
-To record a story simply press the button twice. You will then be prompted to say a key word and then a story name. After that you can read the story and when done reading the story press the button to stop. Your recording will then be played back to you and you can choose to keep it or discard it. 
+To record a story simply press and hold the button down for 5 seconds. You will then be prompted to say a key word and then a story name. After that you can read the story and when done reading the story press the button to stop.
+      - **Note** If you want to delete a story or change a keyword you must navigate to the folder in the Raspberry Pi itself, it CANNOT be done using the button
 
     Alternatively: You can do this from the Python command prompt on your computer with the code StoryBoxKeyboard.py
 
 ## Listening to a Story
-To listen to a story simply press the button once, wait for the beep, and then say a key word. The story will then be played and can be pause with one button press or canceled with two button presses. 
+To listen to a story simply short press the button, wait for the command, and then say a key word. The story will then be played and can be canceled with a button press.
 
 ## Team Members
 - [Linnea Caraballo](https://github.com/confuzzled-equation)
