@@ -1,0 +1,6 @@
+google-api-python-client
+google-cloud-speech
+oauth2client
+SpeechRecognition
+google-cloud-texttospeech
+keyboard
