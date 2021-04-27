@@ -33,9 +33,9 @@ To setup the Raspberry Pi look at the Fritzing layout...
 2. Install: `sudo apt-get install portaudio19-dev` **May not need (check)**
 3. Install: `sudo apt-get install python-rpi.gpio python3-rpi.gpio` **Only for Raspberry Pi**
 4. Open command prompt and cd into folder
-5. Run: `pip install -r requirements.txt`
-      **Note:** on Windows you cannot install PyAudio through pip, use this link: [PyAudio](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio)
-
+5. Run: `pip install -r requirements.txt` **OR** `pip install -r requirements_PC.txt`
+      - **Note:** on Windows you cannot install PyAudio through pip, use this link: [PyAudio](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio)
+      - **Note:** if you get `pygame.error: Failed loading libmpg123.dll` then try uninstalling Pygame and reinstalling it with this link: [Pygame](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame)
 6. Make a project in Google Cloud ![Make New Project](https://user-images.githubusercontent.com/71469786/111881416-af069800-8986-11eb-9903-bd5cb28b31a1.gif)
 
 7. Add Google Speech-to-Text and Google Text-to-Speech APIs ![Get APIs](https://user-images.githubusercontent.com/71469786/111881568-5388da00-8987-11eb-888e-9f2e762ee281.gif)
@@ -47,20 +47,19 @@ To setup the Raspberry Pi look at the Fritzing layout...
 10. Open **`StoryBox.py`** and make sure your json key is in the right location and change `json_file = ` to your json key file name
 
 ## Basic Commands
-* One button press will allow the user to say a key word and have the story assoicated with that key word, read to them
+* A short button press will allow the user to say a key word and have the story assoicated with that key word, read to them
     * Once story is playing:
-        * One button press will pause the story
-        * Two button presses will cancel the story
-* Two button presses will allow a person to record a story, set a key word and story title that will be associated with it
-* Three button presses will allow for another key word to be set for an already existing story title
+        * One button press will cancel the story
+* A long button press (hold for 5 seconds) will allow a person to record a story, set a key word and story title that will be associated with it
 
 ## Recording a Story and Setting Story Name and Key Words
-To record a story simply press the button twice. You will then be prompted to say a key word and then a story name. After that you can read the story and when done reading the story press the button to stop. Your recording will then be played back to you and you can choose to keep it or discard it. 
+To record a story simply press and hold the button down for 5 seconds. You will then be prompted to say a key word and then a story name. After that you can read the story and when done reading the story press the button to stop.
+      - **Note** If you want to delete a story or change a keyword you must navigate to the folder in the Raspberry Pi itself, it CANNOT be done using the button
 
     Alternatively: You can do this from the Python command prompt on your computer with the code StoryBoxKeyboard.py
 
 ## Listening to a Story
-To listen to a story simply press the button once, wait for the beep, and then say a key word. The story will then be played and can be pause with one button press or canceled with two button presses. 
+To listen to a story simply short press the button, wait for the command, and then say a key word. The story will then be played and can be canceled with a button press.
 
 ## Team Members
 - [Linnea Caraballo](https://github.com/confuzzled-equation)
