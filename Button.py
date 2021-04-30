@@ -1,14 +1,15 @@
-import speech_recognition as sr     #Spech Recognition
-import os                           #Operating system for speech-to-text
-import keyboard                     #Keyboard Library
-import pyaudio                      #Pyaudio to record sound
-import wave                         #Ability to play and save wave files
-import csv                          #csv files and functions
+import speech_recognition as sr
+import csv
+import keyboard
+import pyaudio
+import os
 import time
+import wave
 
-
-from csv import DictReader          #Used to add values and read values from a csv file
-from pygame import mixer            #Used to play, pause, and stop sound
+from csv import DictReader
+from pygame import mixer
+from gpiozero import Button
+from datetime import datetime, timedelta
 
 CHUNK = 1024
 P = pyaudio.PyAudio() #Create interface to PortAudio
@@ -365,7 +366,7 @@ def button_story_record(btn):
 def main():
     print ("Press button once to say a keyword and play a story, and press button twice to record a story \
             and set a keyword and story")
-    btn = Button(2)a
+    btn = Button(2)
 
     while True:
         btn.when_pressed = button_story_record

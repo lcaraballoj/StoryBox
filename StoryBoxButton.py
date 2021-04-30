@@ -308,7 +308,7 @@ def button_story_record(btn):
         #Short press activates listen for keyword and then play story if found
         if diff < HOLD_TIME:
             keyWord = FindKeyWord()
-            storyName = keyWord.recognize()     
+            storyName = keyWord.recognize()
 
             #If the string is empty then the keyword was not found
             if (story_name == ''):
