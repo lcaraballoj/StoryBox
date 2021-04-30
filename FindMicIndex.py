@@ -1,2 +1,9 @@
-import speech_recognition as s_r
-print(s_r.Microphone.list_microphone_names()) #print all the microphones connected to your machine
+import pyaudio
+
+p = pyaudio.PyAudio()
+info = p.get_host_api_info_by_index(0)
+numdevices = infor.get('deviceCount')
+
+for i in range(0, numdevices):
+    if (p.getget_device_info_by_host_api_device_index(host_api_index(0,i).get('maxInputChannels')) > 0:
+        print("Input Device id ", i, " - ", p.get_device_info_by_host_api_device_index(0,i).get('name'))
