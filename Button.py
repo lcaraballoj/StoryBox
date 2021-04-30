@@ -1,35 +1,39 @@
-import speech_recognition as sr
-import csv
-import keyboard
-import pyaudio
-import os
+import speech_recognition as sr     #Spech Recognition
+import os                           #Operating system for speech-to-text
+import keyboard                     #Keyboard Library
+import pyaudio                      #Pyaudio to record sound
+import wave                         #Ability to play and save wave files
+import csv                          #csv files and functions
 import time
-import wave
 
-from csv import DictReader
-from pygame import mixer
-from gpiozero import Button
-from datetime import datetime, timedelta
+
+from csv import DictReader          #Used to add values and read values from a csv file
+from pygame import mixer            #Used to play, pause, and stop sound
 
 CHUNK = 1024
 P = pyaudio.PyAudio() #Create interface to PortAudio
-HOLD_TIME = 10
-SLEEP_TIME = 2
 
-#Set global variables
-global count
+#Set a global variables
 global key_words
+global story_name
 global mic
 global story_keyword_csv
-global story_name
 
-count = 0
-mic = 0
+# csv file that holds the key words and story names
 story_keyword_csv = "stories_keywords.csv"
 
+#json file that is needed for GCP (Google Cloud Platform)
 json_file = "GCPKey.json"
 
-#Class to record a waw file
+#Set mic index
+mic = 1
+
+#Set story
+story = ''
+
+SLEEPTIME = 2
+
+#Class to record a wav file
 class RecordSoundFile():
     #Function that is always initiated
     def __init__(self, filename):
@@ -39,31 +43,33 @@ class RecordSoundFile():
         self.chunk = CHUNK
         self.filename = filename
 
-    #Function to record sound and save to wav file
+    #Function to record sound and save to a wav file
     def record(self):
         p = P #Create interface to PortAudio
 
-        #Open stream
+        #open stream
         stream = p.open(format = self.audio_format, channels = self.channels, rate = self.fs,
                         frames_per_buffer = self.chunk, input = True)
 
         recordData = [] #Initialize array for frames
 
+        #Instructions to User
+        print("Press ctr+C to stop recording")
 
         #Record sound
         try:
             while True:
-                print ("Recording...")
+                print("Recording...")           #Debugging line to make sure it is running
 
-                #Record data audio data
+                # Record data audio data
                 data = stream.read(self.chunk)
 
-                #Add the data to a buffer (a list of chunks)
+                # Add the data to a buffer (a list of chunks)
                 recordData.append(data)
 
-        #Stop when button is pressed
+        #Stop when keyboard interrupts (ctr+C is pressed)
         except KeyboardInterrupt:
-            print("Done recording")
+            print("Done Recording")
 
         except Exception as e:
             print(str(e))
@@ -83,20 +89,42 @@ class RecordSoundFile():
 
 #Class to play wav file
 class PlaySound():
+    #Function that is always initiated
     def __init__(self, filename):
         self.filename = filename
 
     def play(self):
         mixer.init()
-        mixer.music.load(self.filename)
-        mixer.music.set_volume(0.5)
-        mixer.music.play()
+        mixer.music.load(self.filename)         #Load file
+        mixer.music.set_volume(0.5)             #Set volume
+        mixer.music.play()                      #Play sound volume at desired volume
 
+    #Function to play, pause, resume, and stop an audio file
     def play_pause(self):
         mixer.init()
         mixer.music.load(self.filename)
         mixer.music.set_volume(0.5)
         mixer.music.play()
+
+        while True:
+            #Pause, resume, exit
+            print("Press 'p' to pause, 'r' to resume")
+            print("Press 'e' to exit the program")
+            query = input("  ")
+
+            if query == 'p':
+
+                # Pausing the music
+                mixer.music.pause()
+            elif query == 'r':
+
+                # Resuming the music
+                mixer.music.unpause()
+            elif query == 'e':
+
+                # Stop the mixer
+                mixer.music.stop()
+                break
 
 #Class to find if word spoken is a keyword
 class FindKeyWord():
@@ -121,26 +149,31 @@ class FindKeyWord():
         #Try to convert speech to text
         try:
             recog = r.recognize_google_cloud(audio, language = 'en-US')
-            print("You said: " + recog)         #Debugger (prints what you said)
+            print("You said: " + recog)                 #Debugger (prints what you said)
 
             #Convert CSV file to dictionary
             csv_to_dictionary_list()
 
             res = None
+
+            recog = recog.strip()
+
+            story_name = ''                             #Set story_name as an empty string
+
             #Search dictionary for key
             for key in story_keyword:
                 #If the key matches the spoken word
                 if key['key'] == recog.strip():
                     res = key
                     story_name = res.get('story')
-                    print(story_name) #Print story name
-                    story_name = story_name + '.wav' #Add .wav to storyname to match it with the wav sound files
-                    return story_name
+                    print(story_name)                   #Print story name (debug)
+                    story_name = story_name + '.wav'    #Add .wav to storyname to match it with the wav sound files
 
-                    break
 
-                else:
-                    print("Not Found") #Debugging (need to find way to just say not found if keyword is not found in any list)
+            if story_name == '':
+                print("Not Found")
+
+            return story_name
 
         #Exceptions/Error Catching
         except sr.UnknownValueError:
@@ -148,17 +181,19 @@ class FindKeyWord():
             story_name = ''
             notRecognized = PlaySound("couldNotUnderstand.mp3")
             notRecognized.play()
-            time.sleep(SLEEP_TIME)
+            time.sleep(SLEEPTIME)
             return story_name
 
         except sr.RequestError as e:
-            print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
+            print("Could not request results from Google Cloud Speech Recognition service")
             story_name = ''
             notRecognized = PlaySound("couldNotUnderstand.mp3")
             notRecognized.play()
-            time.sleep(SLEEP_TIME)
+            time.sleep(SLEEPTIME)
             return story_name
 
+
+#Function to define a storyname
 def story_name():
         global story
 
@@ -185,14 +220,12 @@ def story_name():
             print("Google Cloud Speech Recognition could not understand audio")
             notRecognized = PlaySound("couldNotUnderstand.mp3")
             notRecognized.play()
-            time.sleep(SLEEP_TIME)
             story_name()
 
         except sr.RequestError as e:
-            print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
+            print("Could not request results from Google Cloud Speech Recognition service")
             notRecognized = PlaySound("couldNotUnderstand.mp3")
             notRecognized.play()
-            time.sleep(SLEEP_TIME)
             story_name()
 
 #Function to define a keyword
@@ -234,19 +267,22 @@ def define_keyword_storyname():
 
         return story_title
 
+        # print(temp_story_keyword)
+        # return temp_story_keyword
+
     #Exceptions/Error Catching
     except sr.UnknownValueError:
         print("Google Cloud Speech Recognition could not understand audio")
         notRecognized = PlaySound("couldNotUnderstand.mp3")
         notRecognized.play()
-        time.sleep(SLEEP_TIME)
+        time.sleep(SLEEPTIME)
         define_keyword_storyname()
 
     except sr.RequestError as e:
         print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
         notRecognized = PlaySound("couldNotUnderstand.mp3")
         notRecognized.play()
-        time.sleep(SLEEP_TIME)
+        time.sleep(SLEEPTIME)
         define_keyword_storyname()
 
 #Function to take CSV and make a list of dictionaries
@@ -299,7 +335,6 @@ def button_story_record(btn):
         start_time = time.time()
         diff = 0
 
-        storyname = ''
 
         while btn.is_active and (diff < HOLD_TIME):
             current_time = time.time()
@@ -308,7 +343,7 @@ def button_story_record(btn):
         #Short press activates listen for keyword and then play story if found
         if diff < HOLD_TIME:
             keyWord = FindKeyWord()
-            storyName = keyWord.recognize()     
+            storyName = keyWord.recognize()
 
             #If the string is empty then the keyword was not found
             if (story_name == ''):
@@ -330,10 +365,11 @@ def button_story_record(btn):
 def main():
     print ("Press button once to say a keyword and play a story, and press button twice to record a story \
             and set a keyword and story")
-    btn = Button(2)
+    btn = Button(2)a
 
     while True:
         btn.when_pressed = button_story_record
+
 
 
 #Call main function
