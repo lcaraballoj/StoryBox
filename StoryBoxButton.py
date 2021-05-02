@@ -38,6 +38,7 @@ class RecordSoundFile():
         self.fs = 44100
         self.chunk = CHUNK
         self.filename = filename
+        self.state = 1
 
     #Function to record sound and save to wav file
     def record(self):
@@ -52,7 +53,7 @@ class RecordSoundFile():
 
         #Record sound
         try:
-            while True:
+            while self.state == 1:
                 print ("Recording...")
 
                 #Record data audio data
@@ -60,6 +61,10 @@ class RecordSoundFile():
 
                 #Add the data to a buffer (a list of chunks)
                 recordData.append(data)
+
+                btn = Button(2)
+                btn.waitforpress()
+                self.state = 0
 
         #Stop when button is pressed
         except KeyboardInterrupt:
@@ -321,15 +326,14 @@ def button_story_record(btn):
                     story.play_pause()
         #Long press activates recording story and setting keyword and story name
         else:
-            storyname = ''
+            #storyname = ''
             storyname = define_keyword_storyname()
             recordStory = RecordSoundFile(storyname + 'wav')
             recordStory.record()
 
 #Main function
 def main():
-    print ("Press button once to say a keyword and play a story, and press button twice to record a story \
-            and set a keyword and story")
+    print ("Press button once to say a keyword and play a story, and press button twice to record a story and set a keyword and story")
     btn = Button(2)
 
     while True:
