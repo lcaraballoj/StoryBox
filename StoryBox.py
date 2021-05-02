@@ -329,7 +329,7 @@ def main():
         choice = input("Press 1 to record and 2 to listen: ")
 
         if choice == '1':
-            storyname = ''
+            #storyname = ''
             storyname = define_keyword_storyname()          #Call function to set keyword and story name and set story_title to story_name
             recordStory = RecordSoundFile(storyname+'.wav') #Set file name and call RecordSoundFile class (add .wav to make it a wav file)
             recordStory.record()                            #Call record functionn in RecordSoundFile class
