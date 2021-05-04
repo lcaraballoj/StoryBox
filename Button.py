@@ -13,6 +13,9 @@ from datetime import datetime, timedelta
 
 CHUNK = 1024
 P = pyaudio.PyAudio() #Create interface to PortAudio
+HOLD_TIME = 10
+SLEEP_TIME = 2
+TIMEOUT = 20
 
 #Set a global variables
 global key_words
@@ -193,6 +196,8 @@ class FindKeyWord():
             time.sleep(SLEEPTIME)
             return story_name
 
+        except TimeOUt
+
 
 #Function to define a storyname
 def story_name():
@@ -313,7 +318,7 @@ def button_pause_play(btn):
     start_time = time.time()
     diff = 0
 
-    while btn.is_active and (diff < hold_time):
+    while btn.is_active and (diff < HOLD_TIME):
         current_time = time.time()
         diff = current_time - start_time
 

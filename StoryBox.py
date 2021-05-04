@@ -213,6 +213,8 @@ class FindKeyWord():
 def story_name():
         global story
 
+        story = ''
+
         #Setup Google Speech-to-Text evironment
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = json_file
 
