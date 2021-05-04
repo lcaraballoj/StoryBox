@@ -13,25 +13,20 @@ from pygame import mixer            #Used to play, pause, and stop sound
 CHUNK = 1024
 P = pyaudio.PyAudio() #Create interface to PortAudio
 
-#Set a global variables
-global key_words
-global story_name
-global mic
-global story_keyword_csv
+# #Set a global variables
+# global key_words
+# global story_name
+# global mic
+# global STORY_KEYWORD_CSV
 
-# csv file that holds the key words and story names
-story_keyword_csv = "stories_keywords.csv"
-
-#json file that is needed for GCP (Google Cloud Platform)
-json_file = "GCPKey.json"
-
-#Set mic index
-mic = 1
-
-#Set story
-story = ''
-
+#Global Constants
+STORY_KEYWORD_CSV = "stories_keywords.csv"  # csv file that holds the key words and story names
+JSON_FILE = "GCPKey.json"                   #json file that is needed for GCP (Google Cloud Platform)
+MIC = 1                                     #Set mic index
 SLEEPTIME = 2
+
+# #Set story
+# story = ''
 
 #Class to record a wav file
 class RecordSoundFile():
@@ -133,10 +128,10 @@ class FindKeyWord():
         global story_name
 
         #Setting up the Google Speech-to-Text Cloud
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = json_file
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = JSON_FILE
 
         r = sr.Recognizer()
-        file = sr.Microphone(device_index = mic)
+        file = sr.Microphone(device_index = MIC)
 
         #Using the microphone as the source of audio listen for words
         with file as source:
@@ -216,10 +211,10 @@ def story_name():
         story = ''
 
         #Setup Google Speech-to-Text evironment
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = json_file
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = JSON_FILE
 
         r = sr.Recognizer()
-        file = sr.Microphone(device_index = mic)
+        file = sr.Microphone(device_index = MIC)
 
         with file as source:
             print("What is the story name for the key word?")
@@ -256,10 +251,10 @@ def define_keyword_storyname():
     temp_story_keyword = {}
 
     #Setup Google Speech-to-Text evironment
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = json_file
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = JSON_FILE
 
     r = sr.Recognizer()
-    file = sr.Microphone(device_index = mic)
+    file = sr.Microphone(device_index = MIC)
 
     with file as source:
         print("Say a word to set it as a key word")
@@ -278,7 +273,7 @@ def define_keyword_storyname():
         print("Recorded in CSV File") #Debug
 
         #Append data to csv file to save
-        with open(story_keyword_csv, 'a') as f:
+        with open(STORY_KEYWORD_CSV, 'a') as f:
             writer = csv.writer(f)
             for k, v in temp_story_keyword.items():
                 writer.writerow([k, v])
