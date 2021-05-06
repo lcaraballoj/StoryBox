@@ -1,12 +1,13 @@
 import speech_recognition as sr
 import csv
-import pyaudio
+# import pyaudio
 import os
 import time
-import wave
+# import wave
 
 from csv import DictReader
-from pygame import mixer
+# from pygame import mixer
+
 from gpiozero import Button
 from datetime import datetime, timedelta
 
@@ -126,8 +127,6 @@ class FindKeyWord():
             notRecognized.play()
             time.sleep(SLEEPTIME)
             return story_name
-
-        except TimeOUt
 
 #Function to take CSV and make a list of dictionaries
 def csv_to_dictionary_list():

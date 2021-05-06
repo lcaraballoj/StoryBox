@@ -1,17 +1,18 @@
 import speech_recognition as sr     #Spech Recognition
 import os                           #Operating system for speech-to-text
 import keyboard                     #Keyboard Library
-import pyaudio                      #Pyaudio to record sound
-import wave                         #Ability to play and save wave files
+# import pyaudio                    #Pyaudio to record sound
+# import wave                       #Ability to play and save wave files
 import csv                          #csv files and functions
 import time
 
 
-from csv import DictReader          #Used to add values and read values from a csv file
-from pygame import mixer            #Used to play, pause, and stop sound
+from csv import DictReader                              #Used to add values and read values from a csv file
+# from pygame import mixer                              #Used to play, pause, and stop sound
+from Record_Play import RecordSoundFile, PlaySound      #File that has classes to record and play
 
-CHUNK = 1024
-P = pyaudio.PyAudio() #Create interface to PortAudio
+# CHUNK = 1024
+# P = pyaudio.PyAudio() #Create interface to PortAudio
 
 #Global Constants
 STORY_KEYWORD_CSV = "stories_keywords.csv"  # csv file that holds the key words and story names
@@ -19,104 +20,10 @@ JSON_FILE = "GCPKey.json"                   #json file that is needed for GCP (G
 MIC = 1                                     #Set mic index
 SLEEPTIME = 2
 
-#Class to record a wav file
-class RecordSoundFile():
-    #Function that is always initiated
-    def __init__(self, filename):
-        self.audio_format = pyaudio.paInt16
-        self.channels = 1
-        self.fs = 44100
-        self.chunk = CHUNK
-        self.filename = filename
-
-    #Function to record sound and save to a wav file
-    def record(self):
-        p = P #Create interface to PortAudio
-
-        #open stream
-        stream = p.open(format = self.audio_format, channels = self.channels, rate = self.fs,
-                        frames_per_buffer = self.chunk, input = True)
-
-        recordData = [] #Initialize array for frames
-
-        #Instructions to User
-        print("Press ctr+C to stop recording")
-
-        #Record sound
-        try:
-            while True:
-                print("Recording...")           #Debugging line to make sure it is running
-
-                # Record data audio data
-                data = stream.read(self.chunk)
-
-                # Add the data to a buffer (a list of chunks)
-                recordData.append(data)
-
-        #Stop when keyboard interrupts (ctr+C is pressed)
-        except KeyboardInterrupt:
-            print("Done Recording")
-
-        except Exception as e:
-            print(str(e))
-
-        #Stop and close stream and terminate PortAudio
-        stream.stop_stream()
-        stream.close()
-        p.terminate()
-
-        #Save recorded audio to a file
-        wf = wave.open(self.filename, 'wb')
-        wf.setnchannels(self.channels)
-        wf.setsampwidth(p.get_sample_size(self.audio_format))
-        wf.setframerate(self.fs)
-        wf.writeframes(b''.join(recordData))
-        wf.close()
-
-#Class to play wav file
-class PlaySound():
-    #Function that is always initiated
-    def __init__(self, filename):
-        self.filename = filename
-
-    def play(self):
-        mixer.init()
-        mixer.music.load(self.filename)         #Load file
-        mixer.music.set_volume(0.5)             #Set volume
-        mixer.music.play()                      #Play sound volume at desired volume
-
-    #Function to play, pause, resume, and stop an audio file
-    def play_pause(self):
-        mixer.init()
-        mixer.music.load(self.filename)
-        mixer.music.set_volume(0.5)
-        mixer.music.play()
-
-        while True:
-            #Pause, resume, exit
-            print("Press 'p' to pause, 'r' to resume")
-            print("Press 'e' to exit the program")
-            query = input("  ")
-
-            if query == 'p':
-
-                # Pausing the music
-                mixer.music.pause()
-            elif query == 'r':
-
-                # Resuming the music
-                mixer.music.unpause()
-            elif query == 'e':
-
-                # Stop the mixer
-                mixer.music.stop()
-                break
-
 #Class to find if word spoken is a keyword
 class FindKeyWord():
     #Function to convert speech-to-text and search for keyword
     def recognize(self):
-        global story_name
 
         #Setting up the Google Speech-to-Text Cloud
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = JSON_FILE
@@ -182,8 +89,6 @@ class FindKeyWord():
 #Function to define a storyname
 def story_name():
 
-    story = ''
-
     #Setup Google Speech-to-Text evironment
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = JSON_FILE
 
@@ -200,6 +105,7 @@ def story_name():
     try:
         story = r.recognize_google_cloud(audio, language = 'en-US')
         print("You said: " + story)
+        print (story.strip())
         return story.strip() #Get rid of spaces at beginning and end of string
 
     #Exceptions/Error Catching
@@ -207,13 +113,15 @@ def story_name():
         print("Google Cloud Speech Recognition could not understand audio")
         notRecognized = PlaySound("couldNotUnderstand.mp3")
         notRecognized.play()
-        story_name()
+        time.sleep(SLEEPTIME)
+        return story_name()
 
     except sr.RequestError as e:
         print("Could not request results from Google Cloud Speech Recognition service")
         notRecognized = PlaySound("couldNotUnderstand.mp3")
         notRecognized.play()
-        story_name()
+        time.sleep(SLEEPTIME)
+        return story_name()
 
 #Function to define a keyword
 def define_keyword_storyname():
@@ -241,7 +149,9 @@ def define_keyword_storyname():
         recog = r.recognize_google_cloud(audio, language = 'en-US')
         print("You said: " + recog)
         #Call "remove" function to take away spaces in story name
-        story_title = remove(story_name())
+        story_title = story_name()
+        print (story_title)
+        story_title = remove(story_title)
         #Call story_name function and set that to pair with the keyword
         temp_story_keyword[recog.strip()] = story_title
         print("Recorded in CSV File") #Debug
@@ -260,14 +170,14 @@ def define_keyword_storyname():
         notRecognized = PlaySound("couldNotUnderstand.mp3")
         notRecognized.play()
         time.sleep(SLEEPTIME)
-        define_keyword_storyname()
+        return define_keyword_storyname()
 
     except sr.RequestError as e:
         print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
         notRecognized = PlaySound("couldNotUnderstand.mp3")
         notRecognized.play()
         time.sleep(SLEEPTIME)
-        define_keyword_storyname()
+        return define_keyword_storyname()
 
 #Function to take CSV and make a list of dictionaries
 def csv_to_dictionary_list():
@@ -316,8 +226,6 @@ def main():
             else:
                 story = PlaySound(story_name)
                 story.play_pause()
-
-
 
 #Call main function
 main()
