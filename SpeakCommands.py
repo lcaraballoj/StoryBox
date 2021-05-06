@@ -4,12 +4,7 @@
 import os
 from google.cloud import texttospeech
 
-#Set json key as a global variable and set value
-global json_file
-
-json_file = "GCPKey.json"
-
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = json_file
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = constant.JSON_FILE
 
 #Class to take text and synthesize a voice
 class Speak():
