@@ -28,6 +28,11 @@ This project is a voice box that is triggered by a button and relies on voice co
 
 To setup the Raspberry Pi look at the Fritzing layout...
 
+<img src="https://user-images.githubusercontent.com/71469786/117373262-e7135d00-ae98-11eb-9470-646ebc92ca03.jpg" alt="Frtizing" width=40% height=40%>
+
+<img src="https://user-images.githubusercontent.com/71469786/117373285-f2668880-ae98-11eb-8123-045cea3b7f35.jpg" alt="FrontBear" width=40% height=500>      <img src="https://user-images.githubusercontent.com/71469786/117373288-f4304c00-ae98-11eb-93eb-7ea1d3b73c04.jpg" alt="BackBear" width=40% height=500px>
+
+
 ## Installation
 1. `Git clone https://github.com/confuzzled-equation/StoryBox.git`
 2. Install: `sudo apt-get install portaudio19-dev` **May not need (check)**
@@ -61,8 +66,7 @@ To record a story simply press and hold the button down for 5 seconds. You will 
     Alternatively: You can do this from the Python command prompt on your computer with the code StoryBoxKeyboard.py
 
 ## Listening to a Story
-To listen to a story simply short press the button, wait for the command, and then say a key word. The story will then be played and can be canceled with a button press.
-
+To listen to a story simply short press the button, wait for the command, and then say a key word. The story will then be played and can be canceled with a button press
 ## Team Members
 - [Linnea Caraballo](https://github.com/confuzzled-equation)
 - [Chelsea Coelho](https://github.com/chelseacoelho)
