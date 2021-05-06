@@ -1,16 +1,18 @@
-import speech_recognition as sr
-import csv
-import pyaudio
-import os
-import time
-import wave
+# import speech_recognition as sr
+# import csv
+# import pyaudio
+# import os
+# import time
+# import wave
 import constant
 
-from csv import DictReader
-from pygame import mixer
+# from csv import DictReader
+# from pygame import mixer
 
 from gpiozero import Button
 from datetime import datetime, timedelta
+from Record_Play import RecordSoundFile, PlaySound
+from Find_Story_Keyword import FindKeyWord, story_name, define_keyword_storyname
 
 # CHUNK = 1024
 # P = pyaudio.PyAudio() #Create interface to PortAudio
@@ -94,10 +96,8 @@ class FindKeyWord():
 
             #Convert CSV file to dictionary
             csv_to_dictionary_list()
-
             res = None
-
-            recog = recog.strip()
+            recog = recog.strip()                       #Gets rid of any spaces before or after string
 
             story_name = ''                             #Set story_name as an empty string
 
