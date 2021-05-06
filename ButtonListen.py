@@ -1,34 +1,35 @@
 import speech_recognition as sr
 import csv
-# import pyaudio
+import pyaudio
 import os
 import time
-# import wave
+import wave
+import constant
 
 from csv import DictReader
-# from pygame import mixer
+from pygame import mixer
 
 from gpiozero import Button
 from datetime import datetime, timedelta
 
-CHUNK = 1024
-P = pyaudio.PyAudio() #Create interface to PortAudio
-SLEEP_TIME = 2
+# CHUNK = 1024
+# P = pyaudio.PyAudio() #Create interface to PortAudio
+# SLEEP_TIME = 2
+#
+# # csv file that holds the key words and story names
+# story_keyword_csv = "stories_keywords.csv"
+#
+# #json file that is needed for GCP (Google Cloud Platform)
+# json_file = "GCPKey.json"
 
-# csv file that holds the key words and story names
-story_keyword_csv = "stories_keywords.csv"
-
-#json file that is needed for GCP (Google Cloud Platform)
-json_file = "GCPKey.json"
-
-#Set mic index
-MIC = 1
-
-# #Set story
-# STORY = ''
-
-#Set sleep time
-SLEEPTIME = 2
+# #Set mic index
+# MIC = 1
+#
+# # #Set story
+# # STORY = ''
+#
+# #Set sleep time
+# SLEEPTIME = 2
 
 #Class to play wav file
 class PlaySound():
@@ -73,10 +74,10 @@ class FindKeyWord():
         global story_name
 
         #Setting up the Google Speech-to-Text Cloud
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = json_file
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = constant.JSON_FILE
 
         r = sr.Recognizer()
-        file = sr.Microphone(device_index = MIC)
+        file = sr.Microphone(device_index = constant.MIC)
 
         #Using the microphone as the source of audio listen for words
         with file as source:
@@ -117,7 +118,7 @@ class FindKeyWord():
             story_name = ''
             notRecognized = PlaySound("couldNotUnderstand.mp3")
             notRecognized.play()
-            time.sleep(SLEEPTIME)
+            time.sleep(constant.SLEEPTIME)
             return story_name
 
         except sr.RequestError as e:
@@ -125,7 +126,7 @@ class FindKeyWord():
             story_name = ''
             notRecognized = PlaySound("couldNotUnderstand.mp3")
             notRecognized.play()
-            time.sleep(SLEEPTIME)
+            time.sleep(constant.SLEEPTIME)
             return story_name
 
 #Function to take CSV and make a list of dictionaries

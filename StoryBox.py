@@ -1,24 +1,22 @@
 import speech_recognition as sr     #Spech Recognition
 import os                           #Operating system for speech-to-text
 import keyboard                     #Keyboard Library
-# import pyaudio                    #Pyaudio to record sound
-# import wave                       #Ability to play and save wave files
 import csv                          #csv files and functions
 import time
+import constant
 
 
 from csv import DictReader                              #Used to add values and read values from a csv file
-# from pygame import mixer                              #Used to play, pause, and stop sound
 from Record_Play import RecordSoundFile, PlaySound      #File that has classes to record and play
 
 # CHUNK = 1024
 # P = pyaudio.PyAudio() #Create interface to PortAudio
 
-#Global Constants
-STORY_KEYWORD_CSV = "stories_keywords.csv"  # csv file that holds the key words and story names
-JSON_FILE = "GCPKey.json"                   #json file that is needed for GCP (Google Cloud Platform)
-MIC = 1                                     #Set mic index
-SLEEPTIME = 2
+# #Global Constants
+# STORY_KEYWORD_CSV = "stories_keywords.csv"  # csv file that holds the key words and story names
+# JSON_FILE = "GCPKey.json"                   #json file that is needed for GCP (Google Cloud Platform)
+# MIC = 1                                     #Set mic index
+# SLEEP_TIME = 2
 
 #Class to find if word spoken is a keyword
 class FindKeyWord():
@@ -26,10 +24,10 @@ class FindKeyWord():
     def recognize(self):
 
         #Setting up the Google Speech-to-Text Cloud
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = JSON_FILE
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = constant.JSON_FILE
 
         r = sr.Recognizer()
-        file = sr.Microphone(device_index = MIC)
+        file = sr.Microphone(device_index = constant.MIC)
 
         #Using the microphone as the source of audio listen for words
         with file as source:
@@ -74,7 +72,7 @@ class FindKeyWord():
             story_name = ''
             notRecognized = PlaySound("couldNotUnderstand.mp3")
             notRecognized.play()
-            time.sleep(SLEEPTIME)
+            time.sleep(constant.SLEEP_TIME)
             return story_name
 
         except sr.RequestError as e:
@@ -82,7 +80,7 @@ class FindKeyWord():
             story_name = ''
             notRecognized = PlaySound("couldNotUnderstand.mp3")
             notRecognized.play()
-            time.sleep(SLEEPTIME)
+            time.sleep(constant.SLEEP_TIME)
             return story_name
 
 
@@ -90,10 +88,10 @@ class FindKeyWord():
 def story_name():
 
     #Setup Google Speech-to-Text evironment
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = JSON_FILE
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = constant.JSON_FILE
 
     r = sr.Recognizer()
-    file = sr.Microphone(device_index = MIC)
+    file = sr.Microphone(device_index = constant.MIC)
 
     with file as source:
         print("What is the story name for the key word?")
@@ -113,14 +111,14 @@ def story_name():
         print("Google Cloud Speech Recognition could not understand audio")
         notRecognized = PlaySound("couldNotUnderstand.mp3")
         notRecognized.play()
-        time.sleep(SLEEPTIME)
+        time.sleep(constant.SLEEP_TIME)
         return story_name()
 
     except sr.RequestError as e:
         print("Could not request results from Google Cloud Speech Recognition service")
         notRecognized = PlaySound("couldNotUnderstand.mp3")
         notRecognized.play()
-        time.sleep(SLEEPTIME)
+        time.sleep(constant.SLEEP_TIME)
         return story_name()
 
 #Function to define a keyword
@@ -133,10 +131,10 @@ def define_keyword_storyname():
     temp_story_keyword = {}
 
     #Setup Google Speech-to-Text evironment
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = JSON_FILE
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = constant.JSON_FILE
 
     r = sr.Recognizer()
-    file = sr.Microphone(device_index = MIC)
+    file = sr.Microphone(device_index = constant.MIC)
 
     with file as source:
         print("Say a word to set it as a key word")
@@ -157,7 +155,7 @@ def define_keyword_storyname():
         print("Recorded in CSV File") #Debug
 
         #Append data to csv file to save
-        with open(STORY_KEYWORD_CSV, 'a') as f:
+        with open(constant.STORY_KEYWORD_CSV, 'a') as f:
             writer = csv.writer(f)
             for k, v in temp_story_keyword.items():
                 writer.writerow([k, v])
@@ -169,14 +167,14 @@ def define_keyword_storyname():
         print("Google Cloud Speech Recognition could not understand audio")
         notRecognized = PlaySound("couldNotUnderstand.mp3")
         notRecognized.play()
-        time.sleep(SLEEPTIME)
+        time.sleep(constant.SLEEP_TIME)
         return define_keyword_storyname()
 
     except sr.RequestError as e:
         print("Could not request results from Google Cloud Speech Recognition service; {0}".format(e))
         notRecognized = PlaySound("couldNotUnderstand.mp3")
         notRecognized.play()
-        time.sleep(SLEEPTIME)
+        time.sleep(constant.SLEEP_TIME)
         return define_keyword_storyname()
 
 #Function to take CSV and make a list of dictionaries
@@ -205,6 +203,7 @@ def main():
 
     while True:
         choice = input("Press 1 to record and 2 to listen: ")
+        print(constant.JSON_FILE)
 
         if choice == '1':
             #storyname = ''

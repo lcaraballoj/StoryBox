@@ -1,9 +1,10 @@
 import pyaudio                      #Pyaudio to record sound
 import wave                         #Ability to play and save wave files
+import constant
 
 from pygame import mixer            #Used to play, pause, and stop sound
 
-CHUNK = 1024
+# CHUNK = 1024
 P = pyaudio.PyAudio() #Create interface to PortAudio
 
 #Class to record a wav file
@@ -13,7 +14,7 @@ class RecordSoundFile():
         self.audio_format = pyaudio.paInt16
         self.channels = 1
         self.fs = 44100
-        self.chunk = CHUNK
+        self.chunk = constant.CHUNK
         self.filename = filename
 
     #Function to record sound and save to a wav file
