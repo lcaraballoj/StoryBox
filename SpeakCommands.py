@@ -96,8 +96,12 @@ storyNameSet.talk()
 keyWordNotFound = Speak("The key word was not found. Try again.", "key_word_not_found.mp3")
 keyWordNotFound.talk()
 
-instructionCommand = Speak("Short press the button to listen to a story. Long press the button to record a story", "instructionCommand.mp3")
+instructionCommand = Speak("Press 1 to set a key word, story name, and record the story. Press 2 and say a key word to listen",
+"instructionCommand.mp3")
 instructionCommand.talk()
+
+buttonCommand = Speak("Press the button and say a key word to listen", "buttonCommand.mp3")
+buttonCommand.talk()
 
 couldNotUnderstand = Speak("Could not understand.", "couldNotUnderstand.mp3")
 couldNotUnderstand.talk()

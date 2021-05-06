@@ -13,20 +13,11 @@ from pygame import mixer            #Used to play, pause, and stop sound
 CHUNK = 1024
 P = pyaudio.PyAudio() #Create interface to PortAudio
 
-# #Set a global variables
-# global key_words
-# global story_name
-# global mic
-# global STORY_KEYWORD_CSV
-
 #Global Constants
 STORY_KEYWORD_CSV = "stories_keywords.csv"  # csv file that holds the key words and story names
 JSON_FILE = "GCPKey.json"                   #json file that is needed for GCP (Google Cloud Platform)
 MIC = 1                                     #Set mic index
 SLEEPTIME = 2
-
-# #Set story
-# story = ''
 
 #Class to record a wav file
 class RecordSoundFile():
@@ -170,22 +161,6 @@ class FindKeyWord():
 
             return story_name
 
-
-
-                # found = recog.find(key['key'])
-                #
-                # if (found == -1):                    #If keyword not found
-                #     print ("Not found")
-                #
-                # else:                                #If key word is found
-                #     print ("Found")
-                #     res = key
-                #     story_name = res.get('story')       #Get story name from key
-                #     print(story_name)                   #Debug
-                #     story_name = story_name + '.wav'    #Add .wav to storyname to get correct sound file
-                #     return story_name
-
-
         #Exceptions/Error Catching
         except sr.UnknownValueError:
             print("Google Cloud Speech Recognition could not understand audio")
@@ -206,40 +181,39 @@ class FindKeyWord():
 
 #Function to define a storyname
 def story_name():
-        global story
 
-        story = ''
+    story = ''
 
-        #Setup Google Speech-to-Text evironment
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = JSON_FILE
+    #Setup Google Speech-to-Text evironment
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = JSON_FILE
 
-        r = sr.Recognizer()
-        file = sr.Microphone(device_index = MIC)
+    r = sr.Recognizer()
+    file = sr.Microphone(device_index = MIC)
 
-        with file as source:
-            print("What is the story name for the key word?")
-            command = PlaySound("story_name_set.mp3")
-            command.play()
-            audio = r.adjust_for_ambient_noise(source)
-            audio = r.listen(source)
+    with file as source:
+        print("What is the story name for the key word?")
+        command = PlaySound("story_name_set.mp3")
+        command.play()
+        audio = r.adjust_for_ambient_noise(source)
+        audio = r.listen(source)
 
-        try:
-            story = r.recognize_google_cloud(audio, language = 'en-US')
-            print("You said: " + story)
-            return story.strip() #Get rid of spaces at beginning and end of string
+    try:
+        story = r.recognize_google_cloud(audio, language = 'en-US')
+        print("You said: " + story)
+        return story.strip() #Get rid of spaces at beginning and end of string
 
-        #Exceptions/Error Catching
-        except sr.UnknownValueError:
-            print("Google Cloud Speech Recognition could not understand audio")
-            notRecognized = PlaySound("couldNotUnderstand.mp3")
-            notRecognized.play()
-            story_name()
+    #Exceptions/Error Catching
+    except sr.UnknownValueError:
+        print("Google Cloud Speech Recognition could not understand audio")
+        notRecognized = PlaySound("couldNotUnderstand.mp3")
+        notRecognized.play()
+        story_name()
 
-        except sr.RequestError as e:
-            print("Could not request results from Google Cloud Speech Recognition service")
-            notRecognized = PlaySound("couldNotUnderstand.mp3")
-            notRecognized.play()
-            story_name()
+    except sr.RequestError as e:
+        print("Could not request results from Google Cloud Speech Recognition service")
+        notRecognized = PlaySound("couldNotUnderstand.mp3")
+        notRecognized.play()
+        story_name()
 
 #Function to define a keyword
 def define_keyword_storyname():
@@ -279,9 +253,6 @@ def define_keyword_storyname():
                 writer.writerow([k, v])
 
         return story_title
-
-        # print(temp_story_keyword)
-        # return temp_story_keyword
 
     #Exceptions/Error Catching
     except sr.UnknownValueError:

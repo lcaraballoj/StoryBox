@@ -108,10 +108,6 @@ class FindKeyWord():
                     print(story_name)                   #Print story name (debug)
                     story_name = story_name + '.wav'    #Add .wav to storyname to match it with the wav sound files
 
-
-            if story_name == '':
-                print("Not Found")
-
             return story_name
 
         #Exceptions/Error Catching
@@ -164,7 +160,9 @@ def button_story_record(btn):
 
 #Main function
 def main():
-    print ("Press button once to say a keyword and play a story, and press button twice to record a story and set a keyword and story")
+    print ("Press the button and say a key word to listen")
+    instruction = PlaySound("buttonCommand.mp3")
+    instruction.play()
     btn = Button(2)
 
     while True:
