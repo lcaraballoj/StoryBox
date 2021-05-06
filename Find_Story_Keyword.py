@@ -1,12 +1,13 @@
 #Code to set a key word, story name, and record the story
 
-import speech_recognition as sr     #Spech Recognition
-import os                           #Operating system for speech-to-text
-import csv
 import constant
+import csv
+import os                           #Operating system for speech-to-text
+import speech_recognition as sr     #Spech Recognition
+import time
 
-from Record_Play import PlaySound
 from csv_dictionary import csv_to_dictionary_list
+from Record_Play import PlaySound
 from Remove import remove
 
 #Class to find if word spoken is a keyword
@@ -34,7 +35,7 @@ class FindKeyWord():
             print("You said: " + recog)                 #Debugger (prints what you said)
 
             #Convert CSV file to dictionary
-            csv_to_dictionary_list()
+            story_keyword = csv_to_dictionary_list()
 
             res = None
 

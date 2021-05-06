@@ -2,6 +2,7 @@
 
 #Import os and texttospeech from the Google cloud
 import os
+import constant
 from google.cloud import texttospeech
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = constant.JSON_FILE
