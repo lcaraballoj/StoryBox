@@ -1,3 +1,5 @@
+#Code to record and play audio files
+
 import pyaudio                      #Pyaudio to record sound
 import wave                         #Ability to play and save wave files
 import constant

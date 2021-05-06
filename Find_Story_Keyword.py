@@ -1,3 +1,5 @@
+#Code to set a key word, story name, and record the story
+
 import speech_recognition as sr     #Spech Recognition
 import os                           #Operating system for speech-to-text
 import csv

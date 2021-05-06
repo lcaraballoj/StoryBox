@@ -1,3 +1,5 @@
+#Code to convert csv items into a list of dictionaries
+
 from csv import DictReader                              #Used to add values and read values from a csv fil
 
 #Function to take CSV and make a list of dictionaries
