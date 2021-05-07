@@ -70,7 +70,7 @@ To record a story simply run **`StoryBox.py`** and press 1. Users will then be i
 ## Listening to a Story
 To listen to a story simply short press the button, wait for the command, and then say a key word. The story will then be played and can be canceled with a button press
 
-      Alternatively: Users can do this from the Python command prompt on your computer with the code **`StoryBox.py`**
+      Alternatively: Users can do this from the Python command prompt on your computer with the codeStor yBox.py
 
 ## Resources
 * [Connecting Bluetooth Devices to Raspberry Pi](https://wiretuts.com/connecting-bluetooth-audio-device-to-raspberry-pi)
