@@ -1,10 +1,10 @@
 #Main code
 
 import keyboard                     #Keyboard Library
-import constant
+import constant                     #Calling constants from constant.py to use
 
-from Record_Play import RecordSoundFile, PlaySound      #File that has classes to record and play
-from Find_Story_Keyword import FindKeyWord, story_name, define_keyword_storyname
+from Record_Play import RecordSoundFile, PlaySound                                  #Calling function to record and play sound from Record_play.py
+from Find_Story_Keyword import FindKeyWord, story_name, define_keyword_storyname    #Calling all functions/classes from Find_Story_Keyword.py
 
 #Main function
 def main():

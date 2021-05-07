@@ -2,7 +2,7 @@
 
 import pyaudio                      #Pyaudio to record sound
 import wave                         #Ability to play and save wave files
-import constant
+import constant                     #Calling constants from constant.py to use
 
 from pygame import mixer            #Used to play, pause, and stop sound
 

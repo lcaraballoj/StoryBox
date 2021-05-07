@@ -1,14 +1,14 @@
 #Code to set a key word, story name, and record the story
 
-import constant
-import csv
+import constant                     #Calling constants from constant.py to use
+import csv                          #csv operations
 import os                           #Operating system for speech-to-text
 import speech_recognition as sr     #Spech Recognition
 import time
 
-from csv_dictionary import csv_to_dictionary_list
-from Record_Play import PlaySound
-from Remove import remove
+from csv_dictionary import csv_to_dictionary_list       #Calling function to turn csv files into a list of dictionaries from csv_dictionary.py
+from Record_Play import PlaySound                       #Calling function to play sound from Record_Play.py
+from Remove import remove                               #Calling function to remove spaces from Remove.py
 
 #Class to find if word spoken is a keyword
 class FindKeyWord():
