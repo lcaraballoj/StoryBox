@@ -1,4 +1,4 @@
-#Main code
+#Main code to run with keyboard input
 
 import keyboard                     #Keyboard Library
 import constant                     #Calling constants from constant.py to use
