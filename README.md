@@ -58,17 +58,19 @@ To setup the Raspberry Pi look at the Fritzing layout...
 * A short button press will allow the user to say a key word and have the story assoicated with that key word, read to them
     * Once story is playing:
         * One button press will cancel the story
-* A long button press (hold for 5 seconds) will allow a person to record a story, set a key word and story title that will be associated with it
 
 ## Recording a Story and Setting Story Name and Key Words
-To record a story simply press and hold the button down for 5 seconds. You will then be prompted to say a key word and then a story name. After that you can read the story and when done reading the story press the button to stop.
+To record a story simply run **`StoryBox.py`** and press 1. Users will then be instructed on when to say the keyword, story name, and record the story.
+      
+      Alternatively: Users can upload their own wav file and go directly into the csv to add the keyword and storyname. 
+      The filename must be the same as the story name in the csv but WITHOUT the `.wav`
 
-   * **Note** If you want to delete a story or change a keyword you must navigate to the folder in the Raspberry Pi itself, it CANNOT be done using the button
-
-    Alternatively: You can do this from the Python command prompt on your computer with the code StoryBoxKeyboard.py
+   * **Note** If you want to delete a story or change a keyword you must navigate to the folder in the Raspberry Pi itself
 
 ## Listening to a Story
 To listen to a story simply short press the button, wait for the command, and then say a key word. The story will then be played and can be canceled with a button press
+
+      Alternatively: Users can do this from the Python command prompt on your computer with the code **`StoryBox.py`**
 
 ## Resources
 * [Connecting Bluetooth Devices to Raspberry Pi](https://wiretuts.com/connecting-bluetooth-audio-device-to-raspberry-pi)
