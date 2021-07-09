@@ -48,11 +48,13 @@ To setup the Raspberry Pi look at the Fritzing layout...
 
 8. Make a service account and save json key to same file location that the code is in ![Service Account and JSON Key](https://user-images.githubusercontent.com/71469786/111881838-d52d3780-8988-11eb-95d6-68a31a8f0b4d.gif)
 
-10. Open **`constant.py`** and make sure your json key is in the right location and change `json_file = ` to your json key file name
+9. Open **`constant.py`** and make sure your json key is in the right location and change `json_file = ` to your json key file name
 
-11. Check your mic index by running **`FindMicIndex.py`** and change `MIC = ` in the code file **`constant.py`**
+10. Check your mic index by running **`FindMicIndex.py`** and change `MIC = ` in the code file **`constant.py`**
 
-12. Run: **`SpeakCommand.py`** first to get all the command audio files needed
+11. Run: **`SpeakCommand.py`** first to get all the command audio files needed
+
+12. Run **`ButtonListe.py`** if using button or run **`StoryBox.py`** if using a keyboard
 
 ## Basic Commands
 * A short button press will allow the user to say a key word and have the story assoicated with that key word, read to them
