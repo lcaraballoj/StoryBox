@@ -82,6 +82,6 @@ To listen to a story simply short press the button, wait for the command, and th
 * [Using the Google Speech-to-Text API with Python](https://codelabs.developers.google.com/codelabs/cloud-speech-text-python3)
 
 ## Team Members
-- [Linnea Caraballo](https://github.com/confuzzled-equation)
+- [Linnea Caraballo](https://github.com/lcaraballoj)
 - [Chelsea Coelho](https://github.com/chelseacoelho)
 - [Katherine Durkin](https://github.com/StrawberryKat)
