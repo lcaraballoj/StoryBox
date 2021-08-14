@@ -1,8 +1,6 @@
-
 import constant                                                                       #Calling constants from constant.py to use
 
 from gpiozero import Button                                                           #Importing button functionality from gpiozero
-# from datetime import datetime, timedelta                                            #Can be used to add a long and short press action
 from Record_Play import RecordSoundFile, PlaySound                                    #Calling function to record and play sound from Record_play.py
 from Find_Story_Keyword import FindKeyWord, story_name, define_keyword_storyname      #Calling all functions/classes from Find_Story_Keyword.py
 

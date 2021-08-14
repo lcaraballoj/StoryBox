@@ -1,3 +1,5 @@
+#Code to find the mic index needed
+
 import pyaudio
 
 p = pyaudio.PyAudio()
