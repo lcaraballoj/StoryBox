@@ -10,7 +10,7 @@ This is a voice box that can record multiple stories and upon a key word being s
 6. [Recording a Story and Setting Story Name and Key Words](#recording-a-story-and-setting-story-name-and-key-words)
 7. [Listening to a Story](#listening-to-a-story)
 8. [Resources](#resources)
-9. [Team Members](#team-members)
+9. [Future Goals](#future-goals)
 
 ## Purpose
 This project is a voice box that is triggered by a button and relies on voice commands and key words to play a story. It is similar to Alexa, Siri, and the Google Assistant,  however it is not triggered by saying a keyword like “hey Siri”, instead it will only start to listen once a button is pressed. This is because the voice box is not meant to be as advanced as those softwares, it is instead meant to be an aid for kids and those with special needs. Many times people with special needs repeat themselves and request the same song or story to be read multiple times in a row. The goal of this project is to create a voice box that allows someone with special needs to trigger and request something. The voice box will be individualized and will have the ability to adapt as well as have the ability to be placed in a stuffed animal. So, if for example, a child requests _The Very Hungry Caterpillar_ to be read to them all the time, instead the voice box can be placed inside a stuffed animal of the caterpillar, and the child can press the button and say something like “Very Hungry Caterpillar”, “Caterpillar”, “Hungry Caterpillar”, etc. The voice box will then read the book to them as the preferred person will record the story,set a key word, and story title so that when it is requested the story will be read to them.
@@ -81,7 +81,8 @@ To listen to a story simply short press the button, wait for the command, and th
 * [Integrate Google Cloud Speech-to-Text with Python](https://www.pragnakalp.com/speech-recognition-speech-to-text-python-using-google-api-wit-ai-ibm-cmusphinx/)
 * [Using the Google Speech-to-Text API with Python](https://codelabs.developers.google.com/codelabs/cloud-speech-text-python3)
 
-## Team Members
-- [Linnea Caraballo](https://github.com/lcaraballoj)
-- [Chelsea Coelho](https://github.com/chelseacoelho)
-- [Katherine Durkin](https://github.com/StrawberryKat)
+## Future Goals
+1. Implement Mozilla DeepSpeech instead of Google Speech-to-Text
+2. Add a web and/or mobile application
+3. Make it into a smaller form factor
+4. Possibly add more functions
